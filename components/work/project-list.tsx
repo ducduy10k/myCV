@@ -15,7 +15,7 @@ export function ProjectList({ projects }: IProjectListProps) {
       {projects.map((project) => (
         <Fragment key={project.id}>
           <ProjectCard project={project}></ProjectCard>
-          <Divider sx={{mt:2, mb: 4}}/>
+          <Divider sx={{ mt: 2, mb: 4 }} />
         </Fragment>
       ))}
     </Box>

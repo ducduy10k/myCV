@@ -7,8 +7,8 @@ import { ProjectList } from '../work';
 export interface IFeatureWorkProps {
 }
 
-export function FeatureWork (props: IFeatureWorkProps) {
-   const projectList:Project[] =  [
+export function FeatureWork(props: IFeatureWorkProps) {
+  const projectList: Project[] = [
     {
       id: '1',
       name: 'Flooding Map        ',
@@ -36,7 +36,7 @@ export function FeatureWork (props: IFeatureWorkProps) {
     III. Trình duyệt hỗ trợ
     <p>Web browse</p>
     `,
-    thumbnailUrl:'https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80',
       database: 'Sql server',
       programingLanguages:
         'Google Api , Angular 12, .Net Framework, Sql server, Mapbox GL js, PrimeNG, Material, Turf js, ng-bootstrap, SQL Server, HTML, CSS,1 số dịch vụ của eKMap…  ',
@@ -90,7 +90,7 @@ export function FeatureWork (props: IFeatureWorkProps) {
     III. Trình duyệt hỗ trợ
     <p>Web browse</p>
     `,
-    thumbnailUrl:'https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
 
       database: 'Sql server',
       programingLanguages:
@@ -154,7 +154,7 @@ export function FeatureWork (props: IFeatureWorkProps) {
     III. Trình duyệt hỗ trợ
     <p>Web browse</p>
     `,
-    thumbnailUrl:'https://images.unsplash.com/photo-1538474705339-e87de81450e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1538474705339-e87de81450e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
 
       database: 'Sql server',
       programingLanguages:
@@ -178,19 +178,19 @@ export function FeatureWork (props: IFeatureWorkProps) {
       url: '',
     },
   ]
-     
+
   return (
     <Box component='section' pt={2} pb={4}>
       <Container>
         <Stack direction='row' mb={2} justifyContent='space-between'>
-            <Typography>
-                Works
-            </Typography>
-            <Link passHref href='/works'>
-                View all
-            </Link>
+          <Typography>
+            Works
+          </Typography>
+          <Link passHref href='/works'>
+            View all
+          </Link>
         </Stack>
-        <ProjectList projects={projectList}/>
+        <ProjectList projects={projectList} />
       </Container>
     </Box>
   );
