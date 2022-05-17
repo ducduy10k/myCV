@@ -57,8 +57,8 @@ export function HeaderMobile(props: IHeaderMobileProps) {
   );
 
   return (
-    <div>
-        <Stack direction='row'  display={{ xs: 'block', md: 'none' }} py={2}>
+    <Box display={{ xs: 'block', md: 'none' }} py={2}>
+        <Stack direction='row' >
           <Box flexGrow={1}>
           </Box>
           <Button onClick={toggleDrawer('right', true)}><Menu></Menu></Button>
@@ -71,6 +71,6 @@ export function HeaderMobile(props: IHeaderMobileProps) {
             {list('right')}
           </SwipeableDrawer>
         </Stack>
-    </div>
+    </Box>
   );
 }

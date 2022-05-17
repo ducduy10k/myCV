@@ -4,7 +4,8 @@ import { Box } from '@mui/system';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { Footer, Header } from '../common';
-
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/lab';
 export function MainLayout({ children }: LayoutProps) {
   // useEffect(() => {
   //     console.log('Main layout mouting');
@@ -14,12 +15,14 @@ export function MainLayout({ children }: LayoutProps) {
   // }, [])
 
   return (
-    <Stack minHeight="100vh">
-      <Header />
-      <Box component="main" flexGrow={1}>
-        {children}
-      </Box>
-      <Footer />
-    </Stack>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Stack minHeight="100vh">
+        <Header />
+        <Box component="main" flexGrow={1}>
+          {children}
+        </Box>
+        <Footer />
+      </Stack>
+    </LocalizationProvider>
   );
 }
