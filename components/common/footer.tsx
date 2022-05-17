@@ -39,8 +39,8 @@ export function Footer(props: IFooterProps) {
       <Stack direction='row' justifyContent='center' spacing={0}>
         {
           socials.map((social, index) => {
-            return <Box key={index} component='a' p={2} href={social.link} target='_blank' rel='noopener noreferrer'> 
-              <Icon component={social.icon} sx={{fontSize: '48px'}}></Icon>
+            return <Box key={index} component='a' p={1} href={social.link} target={social.target} rel='noopener noreferrer'> 
+              <Icon component={social.icon} sx={{fontSize: '36px'}}></Icon>
             </Box>
           })
         }
