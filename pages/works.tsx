@@ -1,5 +1,6 @@
 import { MainLayout } from '@/components/layout';
 import { DialogEditProject, ProjectList } from '@/components/work';
+import { DialogDeleteProject } from '@/components/work/dialog-delete-project';
 import { Project } from '@/models';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
@@ -179,47 +180,57 @@ export default function WorkPage (props: IWorkPageProps) {
     },
   ])
 
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openDialogEdit, setOpenDialogEdit] = React.useState(false);
+  const [openDialogDelete, setOpenDialogDelete] = React.useState(false);
+
   const [selectedValue, setSelectedValue] = React.useState<Project | null>(null);
 
   const handleClickOpen = () => {
-    setOpenDialog(true);
+    setOpenDialogEdit(true);
   };
 
   const handleClose = (value: Project| null) => {
-    setOpenDialog(false);
+    setOpenDialogEdit(false);
     setSelectedValue(value);
   };
   const handleAdd= (value: Project) => {
     value.id = (projectList.length  + 1) +'';
     setProjectList([...projectList, value]);
-    setOpenDialog(false);
+    setOpenDialogEdit(false);
   };
      
 const handleClickItemProject= (value : Project) =>{
  setSelectedValue(value);
- setOpenDialog(true);
+ setOpenDialogEdit(true);
 }
 
   return (
     <Box component='section' pt={2} pb={4}>
+      {
+              openDialogDelete? (<DialogDeleteProject
+        selectedValue={selectedValue}
+        open={openDialogEdit}
+        onClose={handleClose}
+        onAdd={handleAdd}
+      />):''
+            }
       <Container>
         <Stack direction='row' mb={2} justifyContent='space-between'>
             <Typography>
-                
             </Typography>
             <Button  onClick={handleClickOpen}>
               Add project
             </Button>
             {
-              openDialog? (<DialogEditProject
+              openDialogEdit? (<DialogEditProject
         selectedValue={selectedValue}
-        open={openDialog}
+        open={openDialogEdit}
         onClose={handleClose}
         onAdd={handleAdd}
-
       />):''
             }
+
+
             
         </Stack>
         <ProjectList projects={projectList} onClickItemProject={handleClickItemProject} viewType='edit'/>

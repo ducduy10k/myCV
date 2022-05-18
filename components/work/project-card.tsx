@@ -1,5 +1,5 @@
 import { Project } from '@/models';
-import { Delete, Edit } from '@mui/icons-material';
+import { Delete, Edit, Info } from '@mui/icons-material';
 import PersonIcon from '@mui/icons-material/Person';
 import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
@@ -17,7 +17,7 @@ export function ProjectCard({ project, viewType, onClickItemProject }: IProjectC
   }
 
   return (
-    <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} onClick={() => handleClickItemProject()}>
+    <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
       <Box width={{ xs: '100%', md: '246px' }}>
         <Image
           src={project.thumbnailUrl ? project.thumbnailUrl : ''}
@@ -39,14 +39,18 @@ export function ProjectCard({ project, viewType, onClickItemProject }: IProjectC
           <Typography marginTop='auto'>{project.technologies}</Typography>
         </Stack>
       </Box>
-      {
-        viewType == 'edit' ? (<Box >
-          <Stack justifyContent={'space-around'} height='100%'>
-            <Button variant="contained" ><Edit></Edit></Button>
-            <Button variant="outlined"><Delete></Delete></Button>
-          </Stack>
-        </Box>) : ''
-      }
+      <Box >
+        <Stack justifyContent={'space-around'} height='100%'>
+          <Button variant="contained" ><Info></Info></Button>
+          {
+            viewType == 'edit' ? (<React.Fragment >
+              <Button variant="contained" onClick={() => handleClickItemProject()}><Edit></Edit></Button>
+              <Button variant="outlined"><Delete></Delete></Button>
+
+            </React.Fragment>) : ''
+          }
+        </Stack>
+      </Box>
     </Stack>
   );
 }
