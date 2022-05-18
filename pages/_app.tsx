@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import 'quill/dist/quill.snow.css';
 import { EmptyLayout } from '@/components/layout';
 import { AppPropsWithLayout } from '../models';
 import { SWRConfig } from 'swr';

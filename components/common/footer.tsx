@@ -15,22 +15,22 @@ export function Footer(props: IFooterProps) {
   const socials: Social[] = [{
     name: '/nguyenduy1011',
     icon: Facebook,
-    link: 'https://www.facebook.com/nguyenduy1011/',
+    link: 'https://www.facebook.com/',
     target: '_blank'
   }, {
     name: '/channel/UCsq5KHaN6zZpM4BYrElb2mQ',
     icon: YouTube,
-    link: 'https://www.youtube.com/channel/UCsq5KHaN6zZpM4BYrElb2mQ',
+    link: 'https://www.youtube.com/',
     target: '_blank'
   }, {
     name: 'ducduy10k@gmail.com',
     icon: Mail,
-    link: 'mailto:ducduy10k@gmail.com?subject=subject&body=body',
+    link: 'https://www.youtube.com/',
     target: '_blank'
   }, {
     name: 'Hanoi, Vietnam',
     icon: PersonPinCircle,
-    link: 'https://www.google.com/maps?q=21.029689, 105.797603',
+    link: 'https://www.youtube.com/',
     target: '_blank'
   },];
 
