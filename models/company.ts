@@ -1,9 +1,11 @@
+import { DateRangePickerDayClassKey } from "@mui/x-date-pickers-pro";
+
 export interface Company {
     id: string;
     companyName: string,
     position: string,
-    from: string,
-    to: string,
+    from: Date,
+    to: Date,
     projects: Projects[],
 }
 export interface Projects {
