@@ -7,13 +7,20 @@ import { ProjectCard } from './project-card';
 export interface IProjectListProps {
   projects: Project[];
   viewType: 'viewOnly' | 'edit';
-  onClickItemProject?: (value: Project)=>void
+  onEditItemProject: (value: Project) => void
+  onDeleteditItemProject: (value: Project) => void
 }
 
-export function ProjectList({ projects, viewType , onClickItemProject = ()=>{}}: IProjectListProps) {
-  const handleClickItemProject = (value:Project)=>{
+export function ProjectList({ projects, viewType , onEditItemProject = ()=>{}, onDeleteditItemProject = ()=>{}}: IProjectListProps) {
+  const handleEditItemProject = (value:Project)=>{
     if(viewType == 'edit'){
-      onClickItemProject(value)
+      onEditItemProject(value)
+    }
+  }
+
+  const handleDeleteItemProject = (value:Project)=>{
+    if(viewType == 'edit'){
+      onDeleteditItemProject(value)
     }
   }
   if (!Array.isArray(projects) || projects.length === 0) return null;
@@ -21,7 +28,7 @@ export function ProjectList({ projects, viewType , onClickItemProject = ()=>{}}:
     <Box>
       {projects.map((project) => (
         <Fragment key={project.id}>
-          <ProjectCard project={project} viewType={viewType} onClickItemProject={handleClickItemProject}></ProjectCard>
+          <ProjectCard project={project} viewType={viewType} onEditItemProject={handleEditItemProject} onDeleteditItemProject={handleDeleteItemProject}></ProjectCard>
           <Divider sx={{ mt: 2, mb: 4 }} />
         </Fragment>
       ))}

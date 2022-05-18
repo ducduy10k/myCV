@@ -22,3 +22,161 @@ a {
 .show {
   display: block;
 }
+
+.page-login {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
+}
+
+.login-form {
+  width: calc(300px + 10%);
+  background-color: var(--body-color);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, .15);
+  padding: 1rem;
+  border-radius: .5rem;
+  max-width: 100%;
+}
+
+.login__title {
+  color: var(--first-color);
+  position: relative;
+  text-align: center;
+}
+
+.login__title::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--first-color);
+}
+
+.login__greeting {
+  text-align: center;
+  font-weight: var(--font-semi-bold);
+  margin-bottom: var(--mb-3);
+}
+
+.input__login {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .5);
+  border-radius: 0;
+  outline: none;
+  margin: 0 .5rem .5rem .5rem;
+  width: calc(100% - 1rem);
+  padding: .5rem .75rem;
+}
+
+.label__login {
+  margin: 0 0 .5rem .5rem;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .5);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forgot-password,
+.create-account {
+  font-size: var(--small-font-size);
+  cursor: pointer;
+}
+
+.forgot-password:hover,
+.create-account:hover {
+  text-decoration: underline;
+  color: var(--primary-color);
+}
+
+.login__alert-error {
+  background-color: var(--danger-color);
+  padding: 1rem;
+  border-radius: .5rem;
+  margin-bottom: var(--mb-3);
+}
+
+.create-account {
+  color: var(--secondary-color);
+}
+
+.forgot-password {
+  margin-left: auto;
+  color: var(--primary-color)
+}
+
+/* Custom checkbox */
+.check__remember {
+  display: block;
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: var(--mb-3);
+  cursor: pointer;
+  font-size: 1rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check__remember input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1rem;
+  width: 1rem;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.check__remember:hover input~.checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.check__remember input:checked~.checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.check__remember input:checked~.checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.check__remember .checkmark:after {
+  left: 5px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
