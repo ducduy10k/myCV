@@ -3,13 +3,13 @@ import { DialogEditProject, ProjectList } from '@/components/work';
 import { Project } from '@/models';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
-import * as React from 'react';
+import  React, { useState } from 'react';
 
 export interface IWorkPageProps {
 }
 
 export default function WorkPage (props: IWorkPageProps) {
-  const projectList:Project[] =  [
+  const [projectList, setProjectList] = useState<Project[]>([
     {
       id: '1',
       name: 'Flooding Map        ',
@@ -156,7 +156,6 @@ export default function WorkPage (props: IWorkPageProps) {
     <p>Web browse</p>
     `,
     thumbnailUrl:'https://images.unsplash.com/photo-1538474705339-e87de81450e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-
       database: 'Sql server',
       programingLanguages:
         'Google Api , Angular 13, .Net Core 5, Sql server, Mapbox GL js, PrimeNG, Material, Turf js, ng-bootstrap, SQL Server, HTML, CSS,1 số dịch vụ của eKMap…  ',
@@ -178,22 +177,30 @@ export default function WorkPage (props: IWorkPageProps) {
       srcCode: '',
       url: '',
     },
-  ]
+  ])
 
-  const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState('');
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState<Project | null>(null);
 
- 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenDialog(true);
   };
 
-  const handleClose = (value: string) => {
-    setOpen(false);
+  const handleClose = (value: Project| null) => {
+    setOpenDialog(false);
     setSelectedValue(value);
   };
-
+  const handleAdd= (value: Project) => {
+    value.id = (projectList.length  + 1) +'';
+    setProjectList([...projectList, value]);
+    setOpenDialog(false);
+  };
      
+const handleClickItemProject= (value : Project) =>{
+ setSelectedValue(value);
+ setOpenDialog(true);
+}
+
   return (
     <Box component='section' pt={2} pb={4}>
       <Container>
@@ -205,15 +212,17 @@ export default function WorkPage (props: IWorkPageProps) {
               Add project
             </Button>
             {
-              open? (<DialogEditProject
+              openDialog? (<DialogEditProject
         selectedValue={selectedValue}
-        open={open}
+        open={openDialog}
         onClose={handleClose}
+        onAdd={handleAdd}
+
       />):''
             }
             
         </Stack>
-        <ProjectList projects={projectList}/>
+        <ProjectList projects={projectList} onClickItemProject={handleClickItemProject} viewType='edit'/>
       </Container>
     </Box>
   );
