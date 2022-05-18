@@ -1,5 +1,4 @@
 import { Project } from '@/models';
-import addWeeks from 'date-fns/addWeeks';
 import {
   Box,
   Button,
@@ -16,7 +15,6 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import "react-quill/dist/quill.snow.css";
-import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 const ReactQuill = dynamic(() => import("react-quill"), {
@@ -27,10 +25,6 @@ export interface IDialogEditProjectProps {
   selectedValue: Project | null;
   onClose: (value: Project | null) => void;
   onAdd: (value: Project) => void;
-}
-
-function getWeeksAfter(date: Date | null, amount: number) {
-  return date ? addWeeks(date, amount) : undefined;
 }
 
 export function DialogEditProject(props: IDialogEditProjectProps) {
@@ -85,9 +79,6 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
   } = formData;
   var fromDate = new Date(parseInt(from));
   var toDate = new Date(parseInt(to));
-  const [value, setValue] = useState<DateRange<Date>>([null, null]);
-
-
   const handleClose = () => {
     onClose(null);
   };
@@ -136,43 +127,29 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           onChange={e => handleChange}
         />
-        {/* <Grid container spacing={2} mt={2}>
-          <Grid item xs={6}>
-            <DesktopDatePicker
-              label="From"
-              inputFormat="MM/dd/yyyy"
-              value={fromDate}
-              onChange={handleChange}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <DesktopDatePicker
-              label="To"
-              inputFormat="MM/dd/yyyy"
-              value={toDate}
-              onChange={handleChange}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </Grid>
-        </Grid> */}
+
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DateRangePicker
-        disablePast
-        value={value}
-        maxDate={getWeeksAfter(value[0], 4)}
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        renderInput={(startProps, endProps) => (
-          <React.Fragment>
-            <TextField {...startProps} />
-            <Box sx={{ mx: 2 }}> to </Box>
-            <TextField {...endProps} />
-          </React.Fragment>
-        )}
-      />
-    </LocalizationProvider>
+          <Grid container spacing={2} mt={2}>
+            <Grid item xs={6}>
+              <DesktopDatePicker
+                label="From"
+                inputFormat="MM/dd/yyyy"
+                value={fromDate}
+                onChange={handleChange}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <DesktopDatePicker
+                label="To"
+                inputFormat="MM/dd/yyyy"
+                value={toDate}
+                onChange={handleChange}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </Grid>
+          </Grid>
+        </LocalizationProvider>
 
         <TextField
           id="standard-search"
