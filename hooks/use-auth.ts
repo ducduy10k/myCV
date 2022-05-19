@@ -5,7 +5,6 @@ import { PublicConfiguration } from 'swr/dist/types';
 export function useAuth(options?: Partial<PublicConfiguration>) {
   // profile
   const MILLISECOND_PER_HOUR = 60 * 60 * 1000;
-  console.log('v');
   const {
     data: profile,
     error,

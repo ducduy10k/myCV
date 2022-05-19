@@ -4,21 +4,28 @@ import PersonIcon from '@mui/icons-material/Person';
 import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import * as React from 'react';
+import Moment from 'moment';
+
 export interface IProjectCardProps {
   project: Project;
   viewType: 'viewOnly' | 'edit';
-  onEditItemProject: (value: Project) => void
-  onDeleteditItemProject: (value: Project) => void
+  onViewProject: (value: Project) => void
+  onEditProject: (value: Project) => void
+  onDeleteProject: (value: Project) => void
 }
 
-export function ProjectCard({ project, viewType, onEditItemProject , onDeleteditItemProject}: IProjectCardProps) {
+export function ProjectCard({ project, viewType, onEditProject , onDeleteProject, onViewProject}: IProjectCardProps) {
 
-  const handleEditItemProject = () => {
-    onEditItemProject(project);
+  const handleViewProject = () => {
+    onViewProject(project);
   }
 
-  const handleDeleteItemProject = () => {
-    onDeleteditItemProject(project);
+  const handleEditProject = () => {
+    onEditProject(project);
+  }
+
+  const handleDeleteProject = () => {
+    onDeleteProject(project);
   }
 
   return (
@@ -47,20 +54,28 @@ export function ProjectCard({ project, viewType, onEditItemProject , onDeletedit
             {project.name}
           </Typography>
           <Box>
-            <Chip color="default" label={project.from + ' - ' + project.to} />
+            <Chip color="default" label={
+              Moment(new Date(parseFloat(project.from))).format('Do MMM yyyy') +
+              ' - ' +
+              Moment(new Date(parseFloat(project.to))).format('Do MMM yyyy')
+            } />
           </Box>
-          <Stack direction='row' alignItems='center' mt={1}><Typography fontWeight='bold' variant='h6' mr={1}>{project.teamSize}</Typography><PersonIcon color='success' /></Stack>
+          <Stack direction='row' alignItems='center' mt={1}>
+            <Typography fontWeight='bold' variant='h6' mr={1}>{project.teamSize}</Typography>
+            <PersonIcon color='success' />
+            </Stack>
+            <Typography  component="h3" variant="h6"mb={1}>Rikkei</Typography>
+          
           <Typography marginTop='auto'>{project.technologies}</Typography>
         </Stack>
       </Box>
       <Box >
-        <Stack justifyContent={'space-around'} height='100%'>
-          <Button variant="contained" ><Info></Info></Button>
+        <Stack direction='row' justifyContent={'space-around'} height='100%'>
+          <Info color='info' onClick={() => handleViewProject()} sx={{cursor:'pointer', ml:1}}></Info>
           {
             viewType == 'edit' ? (<React.Fragment >
-              <Button variant="contained" onClick={() => handleEditItemProject()}><Edit></Edit></Button>
-              <Button variant="outlined"  onClick={() => handleDeleteItemProject()}><Delete></Delete></Button>
-
+              <Edit onClick={() => handleEditProject()} color='primary' sx={{cursor:'pointer', ml:1}}></Edit>
+              <Delete onClick={() => handleDeleteProject()} color='warning' sx={{cursor:'pointer', ml:1}}></Delete>
             </React.Fragment>) : ''
           }
         </Stack>

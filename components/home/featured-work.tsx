@@ -3,6 +3,7 @@ import { Box, Container, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import * as React from 'react';
 import { ProjectList } from '../work';
+import DialogViewProject from '../work/dialog-view-project';
 
 export interface IFeatureWorkProps {
 }
@@ -179,9 +180,31 @@ export function FeatureWork(props: IFeatureWorkProps) {
     },
   ]
 
+  const [openDialogView, setOpenDialogView] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState<Project | null>(null);
+
+  const handleOpenDialogViewProject = (value: Project) => {
+    setSelectedValue(value);
+    setOpenDialogView(true);
+  }
+
+  const handleClose = (value: Project | null) => {
+    console.log(value)
+    setSelectedValue(value);
+    setOpenDialogView(false);
+  };
+
   return (
+    
     <Box component='section' pt={2} pb={4}>
       <Container>
+         {
+        openDialogView && selectedValue? (<DialogViewProject
+          selectedValue={selectedValue}
+          open={openDialogView}
+          onClose={handleClose}
+        />) : ''
+      }
         <Stack direction='row' mb={2} justifyContent='space-between'>
           <Typography>
             Works
@@ -190,7 +213,7 @@ export function FeatureWork(props: IFeatureWorkProps) {
             View all
           </Link>
         </Stack>
-        <ProjectList projects={projectList}  viewType='viewOnly'/>
+        <ProjectList projects={projectList}  onViewItemProject={handleOpenDialogViewProject}  viewType='viewOnly'/>
       </Container>
     </Box>
   );

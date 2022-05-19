@@ -31,7 +31,6 @@ export function HeaderMobile(props: IHeaderMobileProps) {
   };
 
   const handleMenuClick =( href: string ) =>{
-    console.log('clikc' + href);
     router.push(href)
     return;
   }

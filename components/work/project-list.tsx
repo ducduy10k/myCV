@@ -7,11 +7,16 @@ import { ProjectCard } from './project-card';
 export interface IProjectListProps {
   projects: Project[];
   viewType: 'viewOnly' | 'edit';
+  onViewItemProject?: (value: Project) => void
   onEditItemProject?: (value: Project) => void
   onDeleteditItemProject?: (value: Project) => void
 }
 
-export function ProjectList({ projects, viewType , onEditItemProject = ()=>{}, onDeleteditItemProject = ()=>{}}: IProjectListProps) {
+export function ProjectList({ projects, viewType , onEditItemProject = ()=>{}, onDeleteditItemProject = ()=>{}, onViewItemProject = ()=>{}}: IProjectListProps) {
+  const handleViewItemProject = (value:Project)=>{
+      onViewItemProject(value)
+  }
+
   const handleEditItemProject = (value:Project)=>{
     if(viewType == 'edit'){
       onEditItemProject(value)
@@ -28,7 +33,7 @@ export function ProjectList({ projects, viewType , onEditItemProject = ()=>{}, o
     <Box>
       {projects.map((project) => (
         <Fragment key={project.id}>
-          <ProjectCard project={project} viewType={viewType} onEditItemProject={handleEditItemProject} onDeleteditItemProject={handleDeleteItemProject}></ProjectCard>
+          <ProjectCard project={project} viewType={viewType} onEditProject={handleEditItemProject} onDeleteProject={handleDeleteItemProject} onViewProject={handleViewItemProject}></ProjectCard>
           <Divider sx={{ mt: 2, mb: 4 }} />
         </Fragment>
       ))}
