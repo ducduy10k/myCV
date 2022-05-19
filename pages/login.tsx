@@ -1,10 +1,11 @@
 import { authApi } from '@/api/index';
 import { useAuth } from '@/hooks';
-import { Box, Button, Checkbox, FormControlLabel, Stack, TextField } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, Stack, TextField, Typography } from '@mui/material';
 import login from './../styles/Login.module.css';
 import React, { Fragment, useState } from 'react';
 import { useRouter } from 'next/router';
 import Spinner from '@/components/common/spinner';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -87,13 +88,18 @@ export default function LoginPage() {
               {' '}
               <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
             </Box>
-            <Box flexGrow={1}>Forgot your password</Box>
+            <Box flexGrow={1} textAlign='right'>Forgot your password</Box>
           </Stack>
-          <Button variant="text" onClick={handleLoginClick}>
+          <Stack  my={2}>
+          <Button  variant="contained"  onClick={handleLoginClick}>
             Sign in
           </Button>
+          </Stack>
           <div>
-            Dont have an account?<span className="create-account">Create your account.</span>
+            Dont have an account ? 
+            <Link href='./'>
+             <Typography color='primary' component='span'> Create your account.</Typography>
+            </Link>
           </div>
         </div>
       </Stack>
