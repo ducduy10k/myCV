@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { createEmotionCache, theme } from '@/utils/index';
 import { CacheProvider } from '@emotion/react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { Auth } from '@/components/common';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -17,16 +18,19 @@ function MyApp({
   emotionCache = clientSideEmotionCache,
 }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? EmptyLayout;
+  const PrivateComponent = Component.isPrivate ? Auth : EmptyLayout;
   return (
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
+        <CssBaseline />
         <SWRConfig value={{ fetcher: (url) => axiosClient.get(url), shouldRetryOnError: false }}>
           <Layout>
-            <Component {...pageProps} />
+            <PrivateComponent>
+              <Component {...pageProps} />
+            </PrivateComponent>
           </Layout>
         </SWRConfig>
       </ThemeProvider>

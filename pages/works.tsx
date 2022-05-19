@@ -277,3 +277,4 @@ export default function WorkPage(props: IWorkPageProps) {
   );
 }
 WorkPage.Layout = MainLayout
+WorkPage.isPrivate = true;

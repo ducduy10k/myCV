@@ -8,6 +8,7 @@ export interface IAuthProps {
 
 export function Auth({ children }: IAuthProps) {
   const router = useRouter();
+  console.log(children)
   const { profile, firstLoading } = useAuth();
   useEffect(() => {
       if(!firstLoading && !(profile as any)?.name) router.push('/login');
