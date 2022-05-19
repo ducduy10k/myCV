@@ -190,7 +190,7 @@ export function FeatureWork(props: IFeatureWorkProps) {
             View all
           </Link>
         </Stack>
-        <ProjectList projects={projectList}   viewType='viewOnly'/>
+        <ProjectList projects={projectList}  viewType='viewOnly'/>
       </Container>
     </Box>
   );

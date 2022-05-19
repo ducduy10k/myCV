@@ -7,8 +7,8 @@ import { ProjectCard } from './project-card';
 export interface IProjectListProps {
   projects: Project[];
   viewType: 'viewOnly' | 'edit';
-  onEditItemProject: (value: Project) => void
-  onDeleteditItemProject: (value: Project) => void
+  onEditItemProject?: (value: Project) => void
+  onDeleteditItemProject?: (value: Project) => void
 }
 
 export function ProjectList({ projects, viewType , onEditItemProject = ()=>{}, onDeleteditItemProject = ()=>{}}: IProjectListProps) {

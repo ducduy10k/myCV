@@ -15,4 +15,4 @@ export const ROYTE_LIST = [
     lable: 'Blog',
     path: '/blog',
   },
-];
+]

@@ -230,7 +230,6 @@ export default function WorkPage(props: IWorkPageProps) {
     setOpenDialogDelete(true);
   }
 
-
   return (
     <Box component='section' pt={2} pb={4}>
       {
