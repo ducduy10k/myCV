@@ -1,7 +1,9 @@
 import { MainLayout } from '@/components/layout';
 import { DialogEditProject, ProjectList } from '@/components/work';
 import { DialogDeleteProject } from '@/components/work/dialog-delete-project';
+import DialogViewProject from '@/components/work/dialog-view-project';
 import { Project } from '@/models';
+import { Add } from '@mui/icons-material';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -14,8 +16,8 @@ export default function WorkPage(props: IWorkPageProps) {
     {
       id: '1',
       name: 'Flooding Map        ',
-      from: 'NaN',
-      to: 'NaN',
+      from: '1580543823000',
+      to: '1599724623000',
       description: `
     I. Purpose
     <p>Research possible flood scenarios in the area with different timings
@@ -65,8 +67,8 @@ export default function WorkPage(props: IWorkPageProps) {
     {
       id: '2',
       name: 'RealEstate       ',
-      from: 'NaN',
-      to: 'NaN',
+      from: '1580543823000',
+      to: '1599724623000',
       description: `
     I. Purpose
     <p>Application for real estate companies, allowing to manage real estate information on the map
@@ -118,8 +120,8 @@ export default function WorkPage(props: IWorkPageProps) {
     {
       id: '3',
       name: 'eKMap pipe  ',
-      from: '2/2022 ',
-      to: '4/2022',
+      from: '1580543823000',
+      to: '1599724623000',
       description: `
     I. Purpose
     <p> Application to manage flushing plans, pipe flushing plans
@@ -180,6 +182,7 @@ export default function WorkPage(props: IWorkPageProps) {
     },
   ])
 
+  const [openDialogView, setOpenDialogView] = React.useState(false);
   const [openDialogEdit, setOpenDialogEdit] = React.useState(false);
   const [openDialogDelete, setOpenDialogDelete] = React.useState(false);
 
@@ -191,19 +194,18 @@ export default function WorkPage(props: IWorkPageProps) {
   };
 
   const handleClose = (value: Project | null) => {
+    setOpenDialogView(false);
     setOpenDialogEdit(false);
     setOpenDialogDelete(false);
     setSelectedValue(value);
   };
   const handleAddProject = (value: Project) => {
-    console.log(value);
     value.id = (projectList.length + 1) + '';
     setProjectList([...projectList, value]);
     setOpenDialogEdit(false);
   };
 
   const handleEditProject = (value: Project) => {
-    console.log(value)
     setProjectList([...projectList].map((project) =>{
       return (project.id === value.id) ? value : project
     }));
@@ -217,6 +219,10 @@ export default function WorkPage(props: IWorkPageProps) {
     setOpenDialogDelete(false);
   };
 
+  const handleOpenDialogViewProject = (value: Project) => {
+    setSelectedValue(value);
+    setOpenDialogView(true);
+  }
 
   const handleOpenDialogEditProject = (value: Project) => {
     setSelectedValue(value);
@@ -232,6 +238,13 @@ export default function WorkPage(props: IWorkPageProps) {
 
   return (
     <Box component='section' pt={2} pb={4}>
+     {
+        openDialogView && selectedValue? (<DialogViewProject
+          selectedValue={selectedValue}
+          open={openDialogView}
+          onClose={handleClose}
+        />) : ''
+      }
       {
         openDialogDelete && selectedValue? (<DialogDeleteProject
           selectedValue={selectedValue}
@@ -244,7 +257,7 @@ export default function WorkPage(props: IWorkPageProps) {
         <Stack direction='row' mb={2} justifyContent='space-between'>
           <Typography>
           </Typography>
-          <Button onClick={handleOpenAddDialog}>
+          <Button  variant="contained" onClick={handleOpenAddDialog}  sx={{mb:2}} startIcon={<Add/>}>
             Add project
           </Button>
           {
@@ -258,7 +271,7 @@ export default function WorkPage(props: IWorkPageProps) {
             />) : ''
           }
         </Stack>
-        <ProjectList projects={projectList} onEditItemProject={handleOpenDialogEditProject} onDeleteditItemProject={handleOpenDialogDeleteProject} viewType='edit' />
+        <ProjectList projects={projectList} onEditItemProject={handleOpenDialogEditProject} onDeleteditItemProject={handleOpenDialogDeleteProject} onViewItemProject={handleOpenDialogViewProject} viewType='edit' />
       </Container>
     </Box>
   );

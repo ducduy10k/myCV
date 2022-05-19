@@ -85,7 +85,6 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
   };
 
   const handleChange = (name:string , e: any) => {
-    console.log(e)
     setFormData({
       ...formData, [name]: e.target.value
     })
@@ -98,14 +97,12 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
   }
 
   const handleChangeResp = (value: any) => {
-    console.log(value);
     setFormData({
       ...formData, responsibilities: value
     })
   }
 
   const handleChangeProjectTo = (value: Date|null) => {
-    console.log(value);
     setFormData({
       ...formData, to:  value?.getTime()+''
     })
@@ -128,7 +125,9 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
 
   return (
     <Dialog onClose={handleClose} open={true} sx={{ m: 0, p: 2 }} maxWidth="md" fullWidth={true}>
-      <DialogTitle>Add project</DialogTitle>
+      <DialogTitle>  {
+          selectedValue?'Edit': 'Add'
+        } project</DialogTitle>
       <DialogContent dividers={true}>
         <TextField
           id="standard-search"

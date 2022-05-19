@@ -13,8 +13,6 @@ export function HeaderDesktop(props: IHeaderDesktopProps) {
   const {profile, error, login, logout } = useAuth({
     revalidateOnMount: true
   });
-  console.log(profile)
-
   const handleOpenMenuProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };

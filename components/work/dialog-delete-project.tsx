@@ -19,7 +19,6 @@ export interface IDialogDeleteProjectProps {
 export function DialogDeleteProject(props: IDialogDeleteProjectProps) {
   const { onClose, selectedValue, open, onDelete } = props;
   const handleClose = () => {
-    console.log('v')
     onClose(null);
   };
   return (
