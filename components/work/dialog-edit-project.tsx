@@ -25,10 +25,11 @@ export interface IDialogEditProjectProps {
   selectedValue: Project | null;
   onClose: (value: Project | null) => void;
   onAdd: (value: Project) => void;
+  onEdit: (value: Project) => void;
 }
 
 export function DialogEditProject(props: IDialogEditProjectProps) {
-  const { onClose, selectedValue, open, onAdd } = props;
+  const { onClose, selectedValue, open, onAdd, onEdit } = props;
 
   const quillRef = useRef();
 
@@ -50,7 +51,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
     tools: (selectedValue ? selectedValue.tools : ''),
     database: (selectedValue ? selectedValue.database : ''),
     technologies: (selectedValue ? selectedValue.technologies : ''),
-    thumbnailUrl: 'https://images.unsplash.com/photo-1538474705339-e87de81450e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    thumbnailUrl: (selectedValue ? selectedValue.thumbnailUrl : ''),
     expand: false,
     createAt: Date.now() + '',
     updateAt: (selectedValue ? selectedValue.updateAt : ''),
@@ -83,19 +84,14 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
     onClose(null);
   };
 
-  const handleListItemClick = (value: Project) => {
-    onClose(value);
-  };
-
-  const handleChange = (e: any) => {
+  const handleChange = (name:string , e: any) => {
     console.log(e)
     setFormData({
-      ...formData, [e.target.name]: e.target.value
+      ...formData, [name]: e.target.value
     })
   };
 
   const handleChangeDesc = (value: any) => {
-    console.log(value);
     setFormData({
       ...formData, description: value
     })
@@ -108,11 +104,27 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
     })
   }
 
+  const handleChangeProjectTo = (value: Date|null) => {
+    console.log(value);
+    setFormData({
+      ...formData, to:  value?.getTime()+''
+    })
+  }
 
-  const handleSubmit = () => {
+  
+  const handleChangeProjectFrom = (value: Date|null) => {
+    setFormData({
+      ...formData, from: value?.getTime()+''
+    })
+  }
+
+  const handleAdd = () => {
     onAdd(formData)
   }
 
+  const handleEdit = () => {
+    onEdit(formData)
+  }
 
   return (
     <Dialog onClose={handleClose} open={true} sx={{ m: 0, p: 2 }} maxWidth="md" fullWidth={true}>
@@ -120,12 +132,12 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
       <DialogContent dividers={true}>
         <TextField
           id="standard-search"
-          label="Name1"
+          label="Name"
           type="search"
           variant="standard"
-          defaultValue={name}
+          value={name}
           fullWidth={true}
-          onChange={e => handleChange}
+          onChange={e => handleChange('name', e)}
         />
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -135,7 +147,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
                 label="From"
                 inputFormat="MM/dd/yyyy"
                 value={fromDate}
-                onChange={handleChange}
+                onChange={handleChangeProjectFrom}
                 renderInput={(params) => <TextField {...params} />}
               />
             </Grid>
@@ -144,7 +156,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
                 label="To"
                 inputFormat="MM/dd/yyyy"
                 value={toDate}
-                onChange={handleChange}
+                onChange={handleChangeProjectTo}
                 renderInput={(params) => <TextField {...params} />}
               />
             </Grid>
@@ -159,6 +171,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={teamSize}
           sx={{ my: 2 }}
+          onChange={e => handleChange('teamSize', e)}
         />
         <Typography> Description </Typography>
         <ReactQuill theme='snow' value={description} onChange={handleChangeDesc} />
@@ -170,6 +183,8 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={programingLanguages}
           sx={{ my: 2 }}
+          onChange={e => handleChange('programingLanguages', e)}
+
         />
         <TextField
           id="standard-search"
@@ -179,6 +194,8 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={tools}
           sx={{ my: 2 }}
+          onChange={e => handleChange('tools', e)}
+
         />
         <TextField
           id="standard-search"
@@ -188,6 +205,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={database}
           sx={{ my: 2 }}
+          onChange={e => handleChange('database', e)}
         />
         <TextField
           id="standard-search"
@@ -197,6 +215,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={technologies}
           sx={{ my: 2 }}
+          onChange={e => handleChange('technologies', e)}
         />
         <TextField
           id="standard-search"
@@ -206,6 +225,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={thumbnailUrl}
           sx={{ my: 2 }}
+          onChange={e => handleChange('thumbnailUrl', e)}
         />
         <Typography> Responsibilities </Typography>
         <div>
@@ -215,7 +235,9 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
 
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Add</Button>
+        {
+          selectedValue?<Button onClick={handleEdit}>Edit</Button>: <Button onClick={handleAdd}>Add</Button>
+        }
       </DialogActions>
     </Dialog>
   );

@@ -7,8 +7,6 @@ export interface IHeaderMobileProps {}
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export function HeaderMobile(props: IHeaderMobileProps) {
-  const route = useRouter();
-
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -34,7 +32,7 @@ export function HeaderMobile(props: IHeaderMobileProps) {
 
   const handleMenuClick =( href: string ) =>{
     console.log('clikc' + href);
-    route.push(href)
+    router.push(href)
     return;
   }
   const list = (anchor: Anchor) => (
@@ -45,10 +43,10 @@ export function HeaderMobile(props: IHeaderMobileProps) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {ROYTE_LIST.map((route, index) => (
-          <ListItem key={route.path} disablePadding>
-            <ListItemButton onClick={e =>handleMenuClick( route.path)}>
-            <ListItemText primary={route.lable} />
+        {ROYTE_LIST.map((router, index) => (
+          <ListItem key={router.path} disablePadding>
+            <ListItemButton onClick={e =>handleMenuClick( router.path)}>
+            <ListItemText primary={router.lable} />
             </ListItemButton>
           </ListItem>
         ))}

@@ -11,36 +11,36 @@ import React from 'react';
 
 export interface IDialogDeleteProjectProps {
   open: boolean;
-  selectedValue: Project | null;
+  selectedValue: Project ;
   onClose: (value: Project | null) => void;
-  onAdd: (value: Project) => void;
+  onDelete: (value: Project ) => void;
 }
 
 export function DialogDeleteProject(props: IDialogDeleteProjectProps) {
-  const { onClose, selectedValue, open, onAdd } = props;
+  const { onClose, selectedValue, open, onDelete } = props;
   const handleClose = () => {
+    console.log('v')
     onClose(null);
   };
   return (
     <Dialog
-        open={open}
+        open={true}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {"Delete " + selectedValue?.name + " project !" }
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
+            <b>{selectedValue?.name} </b> project will be delete.<br/>Are you sure ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={e =>onDelete(selectedValue)} autoFocus>
+            OK
           </Button>
         </DialogActions>
       </Dialog>

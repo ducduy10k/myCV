@@ -7,25 +7,39 @@ import * as React from 'react';
 export interface IProjectCardProps {
   project: Project;
   viewType: 'viewOnly' | 'edit';
-  onClickItemProject: (value: Project) => void
+  onEditItemProject: (value: Project) => void
+  onDeleteditItemProject: (value: Project) => void
 }
 
-export function ProjectCard({ project, viewType, onClickItemProject }: IProjectCardProps) {
+export function ProjectCard({ project, viewType, onEditItemProject , onDeleteditItemProject}: IProjectCardProps) {
 
-  const handleClickItemProject = () => {
-    onClickItemProject(project);
+  const handleEditItemProject = () => {
+    onEditItemProject(project);
+  }
+
+  const handleDeleteItemProject = () => {
+    onDeleteditItemProject(project);
   }
 
   return (
     <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
       <Box width={{ xs: '100%', md: '246px' }}>
-        <Image
-          src={project.thumbnailUrl ? project.thumbnailUrl : ''}
+        {
+          project.thumbnailUrl ?  <Image
+          src={ project.thumbnailUrl }
           width={246}
           height={180}
           layout="responsive"
           alt="project thumbnail"
-        />
+        />: <Image
+        src={  'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470'}
+        width={246}
+        height={180}
+        layout="responsive"
+        alt="project thumbnail"
+      />
+        }
+       
       </Box>
       <Box flexGrow={1}>
         <Stack direction="column" height='100%'>
@@ -44,8 +58,8 @@ export function ProjectCard({ project, viewType, onClickItemProject }: IProjectC
           <Button variant="contained" ><Info></Info></Button>
           {
             viewType == 'edit' ? (<React.Fragment >
-              <Button variant="contained" onClick={() => handleClickItemProject()}><Edit></Edit></Button>
-              <Button variant="outlined"><Delete></Delete></Button>
+              <Button variant="contained" onClick={() => handleEditItemProject()}><Edit></Edit></Button>
+              <Button variant="outlined"  onClick={() => handleDeleteItemProject()}><Delete></Delete></Button>
 
             </React.Fragment>) : ''
           }

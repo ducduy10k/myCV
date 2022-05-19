@@ -4,12 +4,12 @@ import { DialogDeleteProject } from '@/components/work/dialog-delete-project';
 import { Project } from '@/models';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
-import  React, { useState } from 'react';
+import React, { useState } from 'react';
 
 export interface IWorkPageProps {
 }
 
-export default function WorkPage (props: IWorkPageProps) {
+export default function WorkPage(props: IWorkPageProps) {
   const [projectList, setProjectList] = useState<Project[]>([
     {
       id: '1',
@@ -38,7 +38,7 @@ export default function WorkPage (props: IWorkPageProps) {
     III. Trình duyệt hỗ trợ
     <p>Web browse</p>
     `,
-    thumbnailUrl:'https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1485617359743-4dc5d2e53c89?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80',
       database: 'Sql server',
       programingLanguages:
         'Google Api , Angular 12, .Net Framework, Sql server, Mapbox GL js, PrimeNG, Material, Turf js, ng-bootstrap, SQL Server, HTML, CSS,1 số dịch vụ của eKMap…  ',
@@ -92,7 +92,7 @@ export default function WorkPage (props: IWorkPageProps) {
     III. Trình duyệt hỗ trợ
     <p>Web browse</p>
     `,
-    thumbnailUrl:'https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
 
       database: 'Sql server',
       programingLanguages:
@@ -156,7 +156,7 @@ export default function WorkPage (props: IWorkPageProps) {
     III. Trình duyệt hỗ trợ
     <p>Web browse</p>
     `,
-    thumbnailUrl:'https://images.unsplash.com/photo-1538474705339-e87de81450e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1538474705339-e87de81450e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
       database: 'Sql server',
       programingLanguages:
         'Google Api , Angular 13, .Net Core 5, Sql server, Mapbox GL js, PrimeNG, Material, Turf js, ng-bootstrap, SQL Server, HTML, CSS,1 số dịch vụ của eKMap…  ',
@@ -185,55 +185,80 @@ export default function WorkPage (props: IWorkPageProps) {
 
   const [selectedValue, setSelectedValue] = React.useState<Project | null>(null);
 
-  const handleClickOpen = () => {
+  const handleOpenAddDialog = () => {
+    setSelectedValue(null);
     setOpenDialogEdit(true);
   };
 
-  const handleClose = (value: Project| null) => {
+  const handleClose = (value: Project | null) => {
     setOpenDialogEdit(false);
+    setOpenDialogDelete(false);
     setSelectedValue(value);
   };
-  const handleAdd= (value: Project) => {
-    value.id = (projectList.length  + 1) +'';
+  const handleAddProject = (value: Project) => {
+    console.log(value);
+    value.id = (projectList.length + 1) + '';
     setProjectList([...projectList, value]);
     setOpenDialogEdit(false);
   };
-     
-const handleClickItemProject= (value : Project) =>{
- setSelectedValue(value);
- setOpenDialogEdit(true);
-}
+
+  const handleEditProject = (value: Project) => {
+    console.log(value)
+    setProjectList([...projectList].map((project) =>{
+      return (project.id === value.id) ? value : project
+    }));
+    setOpenDialogEdit(false);
+  };
+
+  const handleDeleteProject = (value: Project) => {
+    setProjectList([...projectList].filter((project)=>{
+      return project.id !== value.id
+    }));
+    setOpenDialogDelete(false);
+  };
+
+
+  const handleOpenDialogEditProject = (value: Project) => {
+    setSelectedValue(value);
+    setOpenDialogEdit(true);
+  }
+
+
+  const handleOpenDialogDeleteProject = (value: Project) => {
+    if(!value) return;
+    setSelectedValue(value);
+    setOpenDialogDelete(true);
+  }
 
   return (
     <Box component='section' pt={2} pb={4}>
       {
-              openDialogDelete? (<DialogDeleteProject
-        selectedValue={selectedValue}
-        open={openDialogEdit}
-        onClose={handleClose}
-        onAdd={handleAdd}
-      />):''
-            }
+        openDialogDelete && selectedValue? (<DialogDeleteProject
+          selectedValue={selectedValue}
+          open={openDialogEdit}
+          onClose={handleClose}
+          onDelete={handleDeleteProject}
+        />) : ''
+      }
       <Container>
         <Stack direction='row' mb={2} justifyContent='space-between'>
-            <Typography>
-            </Typography>
-            <Button  onClick={handleClickOpen}>
-              Add project
-            </Button>
-            {
-              openDialogEdit? (<DialogEditProject
-        selectedValue={selectedValue}
-        open={openDialogEdit}
-        onClose={handleClose}
-        onAdd={handleAdd}
-      />):''
-            }
+          <Typography>
+          </Typography>
+          <Button onClick={handleOpenAddDialog}>
+            Add project
+          </Button>
+          {
+            openDialogEdit ? (<DialogEditProject
+              selectedValue={selectedValue}
+              open={openDialogEdit}
+              onClose={handleClose}
+              onAdd={handleAddProject}
+              onEdit={handleEditProject}
 
-
-            
+            />) : ''
+          }
         </Stack>
-        <ProjectList projects={projectList} onClickItemProject={handleClickItemProject} viewType='edit'/>
+        <ProjectList projects={projectList} onEditItemProject={handleOpenDialogEditProject} onDeleteditItemProject={handleOpenDialogDeleteProject} viewType='edit' />
       </Container>
     </Box>
   );
