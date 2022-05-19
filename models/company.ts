@@ -6,9 +6,6 @@ export interface Company {
     position: string,
     from: Date,
     to: Date,
-    projects: Projects[],
+    desc: string,
 }
-export interface Projects {
-    name: string;
-    id: string;
-}
+

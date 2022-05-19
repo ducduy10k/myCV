@@ -9,10 +9,13 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
 import moment from 'moment';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 export interface ICompanyCardProps {
   company: Company;
 }
 const style = {
+  display: 'flex',
+  flexDirection: 'column',
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
@@ -31,9 +34,11 @@ export function CompanyCard({ company }: ICompanyCardProps) {
   const [value, setValue] = React.useState<DateRange<Date>>([new Date('01-01-2022'), new Date('01-10-2022')]);
   const [open, setOpen] = React.useState(false);
   const [nameCompany, setNameCompany] = React.useState(company.companyName);
+  const [desc, setDesc] = React.useState(company.desc);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   console.log(nameCompany)
+  const handleChange = () => ({})
   const onChangeNameCompany = (e: any) => setNameCompany(e.target.value);
   return (
 
@@ -52,20 +57,10 @@ export function CompanyCard({ company }: ICompanyCardProps) {
           <Box>
             <Chip color="default" label={moment(company.from).format("DD/MM/YYYY") + ' - ' + moment(company.to).format("DD/MM/YYYY")} />
           </Box>
-          <List
-            sx={{
-              display: 'flex',
+          <Typography component="h6" variant="h6" mb={1}>
+            {company.desc}
+          </Typography>
 
-            }}
-          >
-            {
-              company.projects.map((project) =>
-                <ListItem>
-                  {project.name}
-                </ListItem>
-              )
-            }
-          </List>
         </Stack>
 
       </Box>
@@ -89,25 +84,40 @@ export function CompanyCard({ company }: ICompanyCardProps) {
             onChange={onChangeNameCompany}
             sx={{ marginBottom: '16px' }}
           />
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DateRangePicker
-              defaultValue={value}
-              value={value}
-              maxDate={getWeeksAfter(value[0], 4)}
-              onChange={(newValue) => {
-                setValue(newValue);
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', }} mb={3}>
+
+            <TextField
+              id="date"
+              label="from"
+              type="date"
+              defaultValue="2017-05-24"
+              sx={{ width: 200 }}
+              InputLabelProps={{
+                shrink: true,
               }}
-              renderInput={(startProps, endProps) => (
-                <React.Fragment>
-                  <TextField {...startProps} />
-                  <Box sx={{ mx: 2 }}> to </Box>
-                  <TextField {...endProps} />
-                </React.Fragment>
-              )}
             />
-          </LocalizationProvider>
+            <TextField
+              id="date"
+              label="to"
+              type="date"
+              defaultValue="2017-05-24"
+              sx={{ width: 200 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Box>
+          <TextField
+            required
+            id="outlined-required"
+            label="Mô tả"
+            defaultValue="Hello World"
+            value={desc}
+            onChange={onChangeNameCompany}
+
+          />
         </Box>
-      </Modal>
-    </Box>
+      </Modal >
+    </Box >
   );
 }

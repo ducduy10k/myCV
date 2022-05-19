@@ -16,17 +16,7 @@ export default function CompanyPage(props: ICompanyProps) {
       position: 'Fullstack',
       from: new Date('01-01-2022'),
       to: new Date('10-01-2022'),
-      projects: [{
-        name: 'education',
-        id: '1'
-      }, {
-        name: 'commerce',
-        id: '2'
-      },
-      {
-        name: 'parmacy',
-        id: '3'
-      }],
+      desc: 'du an giáo dục',
     },
 
     {
@@ -35,17 +25,7 @@ export default function CompanyPage(props: ICompanyProps) {
       position: 'Frontend',
       from: new Date('2022-01-01'),
       to: new Date('2022-09-01'),
-      projects: [{
-        name: 'education',
-        id: '1'
-      }, {
-        name: 'commerce',
-        id: '2'
-      },
-      {
-        name: 'parmacy',
-        id: '3'
-      }],
+      desc: 'du an y te',
 
     }
   ]
