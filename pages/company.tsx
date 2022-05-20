@@ -4,8 +4,11 @@ import { MainLayout } from '@/components/layout';
 import { Work, Company } from '@/models';
 import * as moment from 'moment/moment';
 import React, { useState } from 'react';
-import { Box, Button, Container, Stack, Typography, Modal, TextField } from '@mui/material';
-
+import { Box, Button, Container, Stack, Typography, Modal, TextField, Grid } from '@mui/material';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 const style = {
   display: 'flex',
@@ -53,6 +56,13 @@ export default function CompanyPage(props: ICompanyProps) {
 
   const [nameProject, setNameProjetc] = React.useState();
 
+  const handleAddCompany = () => {
+    handleOpen()
+    setName('')
+    setDesc('')
+
+
+  }
   const onChangeNameProject = (e: any) => {
     setName(e.target.value)
   }
@@ -68,10 +78,11 @@ export default function CompanyPage(props: ICompanyProps) {
   const handleOpenModal = (id: string) => {
     handleOpen();
     const companies = companyList.find((company: Company) => company.id === id)
-    setName(companies?.companyName || '')
-    setDesc(companies?.desc || '')
+    if (companies) {
+      setName(companies?.companyName || '')
+      setDesc(companies?.desc || '')
+    }
   }
-  console.log('name', name)
 
   const handleAdd = () => {
     handleClose();
@@ -85,15 +96,13 @@ export default function CompanyPage(props: ICompanyProps) {
     }];
     setCompanyList(companies);
   }
-  console.log(companyList);
   return (
 
     <Box component='div' pt={2} pb={4}>
       <Box>
-        <Button onClick={handleOpen} sx={{ marginLeft: '80%', marginBottom: '30px' }} size="small" variant="outlined">Thêm </Button>
+        <Button onClick={handleAddCompany} sx={{ marginLeft: '80%', marginBottom: '30px' }} size="small" variant="outlined">Thêm </Button>
       </Box>
       <CompanyList companies={companyList} handleOpen={handleOpenModal} />
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -106,29 +115,34 @@ export default function CompanyPage(props: ICompanyProps) {
             id="outlined-required"
             label="Tên công ty"
             value={name}
+            defaultValue={name}
             onChange={onChangeNameProject}
           />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', }} mb={3} mt={3}>
-            <TextField
-              id="date"
-              label="from"
-              type="date"
-              onChange={onChangeStart}
-              sx={{ width: 200 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              id="date"
-              label="to"
-              type="date"
-              onChange={onChangeEnd}
-              sx={{ width: 200 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Grid container spacing={2} mt={2}>
+                <Grid item xs={6}>
+                  <DesktopDatePicker
+                    label="From"
+                    inputFormat="MM/dd/yyyy"
+                    value={start}
+                    onChange={onChangeStart}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <DesktopDatePicker
+                    label="To"
+                    inputFormat="MM/dd/yyyy"
+                    value={end}
+                    onChange={onChangeEnd}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </Grid>
+              </Grid>
+            </LocalizationProvider>
+
           </Box>
           <TextField
             required
@@ -139,7 +153,7 @@ export default function CompanyPage(props: ICompanyProps) {
           />
           <Button onClick={handleAdd} sx={{ marginLeft: '80%', marginTop: '160px' }} size="small" variant="outlined">Thêm </Button>
         </Box>
-      </Modal >
+      </Modal>
     </Box>
   );
 }

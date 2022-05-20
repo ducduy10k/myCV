@@ -6,11 +6,11 @@ import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { useAuth } from '@/hooks';
 
-export interface IHeaderDesktopProps {}
+export interface IHeaderDesktopProps { }
 
 export function HeaderDesktop(props: IHeaderDesktopProps) {
   const router = useRouter();
-  const {profile, error, login, logout } = useAuth({
+  const { profile, error, login, logout } = useAuth({
     revalidateOnMount: true
   });
   const handleOpenMenuProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -18,12 +18,12 @@ export function HeaderDesktop(props: IHeaderDesktopProps) {
   };
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const openMenuProfile = Boolean(anchorEl);
-  
+
   const handleCloseMenuProfileClick = () => {
     setAnchorEl(null);
   };
 
-  const  handleLogout = async () =>{
+  const handleLogout = async () => {
     await logout();
     router.push('/login')
   }
@@ -33,39 +33,39 @@ export function HeaderDesktop(props: IHeaderDesktopProps) {
         <Stack direction="row" justifyContent="flex-end">
           {ROYTE_LIST.map((route) => (
             <Link key={route.path} passHref href={route.path}>
-              <MuiLink sx={{ml:2, fontWeight :"medium" }}className={clsx({
+              <MuiLink sx={{ ml: 2, fontWeight: "medium" }} className={clsx({
                 active: router.pathname === route.path
               })}>{route.lable}</MuiLink>
             </Link>
           ))}
           {
-           !profile ? (<Link passHref href='/login'>
-              <MuiLink sx={{ml:2, fontWeight :"medium" }}className={clsx({
+            !profile ? (<Link passHref href='/login'>
+              <MuiLink sx={{ ml: 2, fontWeight: "medium" }} className={clsx({
                 active: router.pathname === '/login'
               })}>Login</MuiLink>
-            </Link>): (<>
-             <Typography sx={{ml:2, fontWeight :"medium" }}
-        id="basic-button"
-        aria-controls={openMenuProfile ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={openMenuProfile ? 'true' : undefined}
-        onClick={handleOpenMenuProfileClick}
-      >
-        {(profile as any).name}
-      </Typography>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={openMenuProfile}
-        onClose={handleCloseMenuProfileClick}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleCloseMenuProfileClick}>Profile</MenuItem>
-        <MenuItem onClick={handleCloseMenuProfileClick}>My account</MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      </Menu></>)
+            </Link>) : (<>
+              <Typography sx={{ ml: 2, fontWeight: "medium" }}
+                id="basic-button"
+                aria-controls={openMenuProfile ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={openMenuProfile ? 'true' : undefined}
+                onClick={handleOpenMenuProfileClick}
+              >
+                {(profile as any).name}
+              </Typography>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={openMenuProfile}
+                onClose={handleCloseMenuProfileClick}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <MenuItem onClick={handleCloseMenuProfileClick}>Profile</MenuItem>
+                <MenuItem onClick={handleCloseMenuProfileClick}>My account</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu></>)
           }
         </Stack>
       </Container>
