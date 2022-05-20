@@ -1,4 +1,5 @@
 import { Project } from '@/models';
+
 import {
   Box,
   Button,
@@ -14,11 +15,12 @@ import {
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import "react-quill/dist/quill.snow.css";
+import 'react-quill/dist/quill.snow.css';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-const ReactQuill = dynamic(() => import("react-quill"), {
-  ssr: false
+import { projectApi } from '@/api-client';
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
 });
 export interface IDialogEditProjectProps {
   open: boolean;
@@ -38,28 +40,28 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
   }, [quillRef]);
 
   const [formData, setFormData] = useState<Project>({
-    id: (selectedValue ? selectedValue.id : ''),
-    name: (selectedValue ? selectedValue.name : ''),
+    _id: selectedValue ? selectedValue._id : '',
+    name: selectedValue ? selectedValue.name : '',
     from: Date.now() + '',
     to: Date.now() + '',
-    url: (selectedValue ? selectedValue.url : ''),
-    srcCode: (selectedValue ? selectedValue.srcCode : ''),
-    description: (selectedValue ? selectedValue.description : ''),
-    teamSize: (selectedValue ? selectedValue.teamSize : 0),
-    responsibilities: (selectedValue ? selectedValue.responsibilities : ''),
-    programingLanguages: (selectedValue ? selectedValue.programingLanguages : ''),
-    tools: (selectedValue ? selectedValue.tools : ''),
-    database: (selectedValue ? selectedValue.database : ''),
-    technologies: (selectedValue ? selectedValue.technologies : ''),
-    thumbnailUrl: (selectedValue ? selectedValue.thumbnailUrl : ''),
+    url: selectedValue ? selectedValue.url : '',
+    srcCode: selectedValue ? selectedValue.srcCode : '',
+    description: selectedValue ? selectedValue.description : '',
+    teamSize: selectedValue ? selectedValue.teamSize : 0,
+    responsibilities: selectedValue ? selectedValue.responsibilities : '',
+    programingLanguages: selectedValue ? selectedValue.programingLanguages : '',
+    tools: selectedValue ? selectedValue.tools : '',
+    database: selectedValue ? selectedValue.database : '',
+    technologies: selectedValue ? selectedValue.technologies : '',
+    thumbnailUrl: selectedValue ? selectedValue.thumbnailUrl : '',
     expand: false,
     createAt: Date.now() + '',
-    updateAt: (selectedValue ? selectedValue.updateAt : ''),
-    creator: (selectedValue ? selectedValue.creator : ''),
+    updateAt: selectedValue ? selectedValue.updateAt : '',
+    creator: selectedValue ? selectedValue.creator : '',
   });
 
   const {
-    id,
+    _id,
     name,
     from,
     to,
@@ -84,51 +86,68 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
     onClose(null);
   };
 
-  const handleChange = (name:string , e: any) => {
+  const handleChange = (name: string, e: any) => {
     setFormData({
-      ...formData, [name]: e.target.value
-    })
+      ...formData,
+      [name]: e.target.value,
+    });
   };
 
   const handleChangeDesc = (value: any) => {
     setFormData({
-      ...formData, description: value
-    })
-  }
+      ...formData,
+      description: value,
+    });
+  };
 
   const handleChangeResp = (value: any) => {
     setFormData({
-      ...formData, responsibilities: value
-    })
-  }
+      ...formData,
+      responsibilities: value,
+    });
+  };
 
-  const handleChangeProjectTo = (value: Date|null) => {
+  const handleChangeProjectTo = (value: Date | null) => {
     setFormData({
-      ...formData, to:  value?.getTime()+''
-    })
-  }
+      ...formData,
+      to: value?.getTime() + '',
+    });
+  };
 
-  
-  const handleChangeProjectFrom = (value: Date|null) => {
+  const handleChangeProjectFrom = (value: Date | null) => {
     setFormData({
-      ...formData, from: value?.getTime()+''
-    })
-  }
+      ...formData,
+      from: value?.getTime() + '',
+    });
+  };
 
   const handleAdd = () => {
     console.log(formData);
-    // onAdd(formData)
-  }
+    formData.teamSize = parseInt(formData.teamSize + '');
+    projectApi
+      .addProject(formData)
+      .then((data: any) => {
+        console.log(data);
+        formData._id = data._id;
+        return onAdd(formData);
+      })
+      .catch((error) => {});
+  };
 
   const handleEdit = () => {
-    onEdit(formData)
-  }
+    projectApi
+      .updateProject(formData)
+      .then(() => {
+        onEdit(formData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <Dialog onClose={handleClose} open={true} sx={{ m: 0, p: 2 }} maxWidth="md" fullWidth={true}>
-      <DialogTitle>  {
-          selectedValue?'Edit': 'Add'
-        } project</DialogTitle>
+      <DialogTitle> {selectedValue ? 'Edit' : 'Add'} project</DialogTitle>
       <DialogContent dividers={true}>
         <TextField
           id="standard-search"
@@ -137,7 +156,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           variant="standard"
           value={name}
           fullWidth={true}
-          onChange={e => handleChange('name', e)}
+          onChange={(e) => handleChange('name', e)}
         />
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -171,10 +190,10 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={teamSize}
           sx={{ my: 2 }}
-          onChange={e => handleChange('teamSize', e)}
+          onChange={(e) => handleChange('teamSize', e)}
         />
         <Typography> Description </Typography>
-        <ReactQuill theme='snow' value={description} onChange={handleChangeDesc} />
+        <ReactQuill theme="snow" value={description || ''} onChange={handleChangeDesc} />
         <TextField
           id="standard-search"
           label="Programing Languages"
@@ -183,8 +202,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={programingLanguages}
           sx={{ my: 2 }}
-          onChange={e => handleChange('programingLanguages', e)}
-
+          onChange={(e) => handleChange('programingLanguages', e)}
         />
         <TextField
           id="standard-search"
@@ -194,8 +212,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={tools}
           sx={{ my: 2 }}
-          onChange={e => handleChange('tools', e)}
-
+          onChange={(e) => handleChange('tools', e)}
         />
         <TextField
           id="standard-search"
@@ -205,7 +222,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={database}
           sx={{ my: 2 }}
-          onChange={e => handleChange('database', e)}
+          onChange={(e) => handleChange('database', e)}
         />
         <TextField
           id="standard-search"
@@ -215,7 +232,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={technologies}
           sx={{ my: 2 }}
-          onChange={e => handleChange('technologies', e)}
+          onChange={(e) => handleChange('technologies', e)}
         />
         <TextField
           id="standard-search"
@@ -225,19 +242,21 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
           fullWidth={true}
           defaultValue={thumbnailUrl}
           sx={{ my: 2 }}
-          onChange={e => handleChange('thumbnailUrl', e)}
+          onChange={(e) => handleChange('thumbnailUrl', e)}
         />
         <Typography> Responsibilities </Typography>
         <div>
-          <ReactQuill theme="snow" value={responsibilities} onChange={handleChangeResp} />
+          <ReactQuill theme="snow" value={responsibilities || ''} onChange={handleChangeResp} />
         </div>
       </DialogContent>
 
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        {
-          selectedValue?<Button onClick={handleEdit}>Edit</Button>: <Button onClick={handleAdd}>Add</Button>
-        }
+        {selectedValue ? (
+          <Button onClick={handleEdit}>Edit</Button>
+        ) : (
+          <Button onClick={handleAdd}>Add</Button>
+        )}
       </DialogActions>
     </Dialog>
   );

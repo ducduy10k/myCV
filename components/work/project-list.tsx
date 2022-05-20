@@ -32,7 +32,7 @@ export function ProjectList({ projects, viewType , onEditItemProject = ()=>{}, o
       return (
     <Box>
       {projects.map((project) => (
-        <Fragment key={project.id}>
+        <Fragment key={project._id}>
           <ProjectCard project={project} viewType={viewType} onEditProject={handleEditItemProject} onDeleteProject={handleDeleteItemProject} onViewProject={handleViewItemProject}></ProjectCard>
           <Divider sx={{ mt: 2, mb: 4 }} />
         </Fragment>

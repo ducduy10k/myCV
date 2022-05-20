@@ -1,3 +1,4 @@
+import { projectApi } from '@/api-client';
 import { Project } from '@/models';
 import {
   Button,
@@ -21,6 +22,16 @@ export function DialogDeleteProject(props: IDialogDeleteProjectProps) {
   const handleClose = () => {
     onClose(null);
   };
+
+  const handleDelete  = () => {
+    console.log(selectedValue);
+    projectApi.deleteProject(selectedValue._id).then(()=>{
+      onDelete(selectedValue);
+    })
+    .catch(error =>{
+      console.log(error)
+    })
+  };
   return (
     <Dialog
         open={true}
@@ -38,7 +49,7 @@ export function DialogDeleteProject(props: IDialogDeleteProjectProps) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={e =>onDelete(selectedValue)} autoFocus>
+          <Button onClick={handleDelete} autoFocus>
             OK
           </Button>
         </DialogActions>
