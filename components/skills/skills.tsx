@@ -1,35 +1,28 @@
-import { Company } from '@/models';
+import { Skill } from '@/models';
 import { Divider } from '@mui/material';
 import React, { Fragment } from 'react';
-import { CompanyCard } from './company-card';
+import { SkillItem } from './skill-item';
 import { Box, Chip, Stack, Typography, List, Button, Modal, TextField } from '@mui/material';
 
 
 export interface ICompanyListProps {
-  companies: Company[];
+  skills: Skill[];
   handleOpen(id: string): void;
 }
 
-
-export function CompanyList({ companies, handleOpen }: ICompanyListProps) {
-
-
-
-
+export function SkillList({ skills, handleOpen }: ICompanyListProps) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', }}>
-
       <Box>
         {
-          companies?.map((company) => (
-            <Fragment key={company.id}>
-              <CompanyCard company={company} handleOpen={handleOpen}></CompanyCard>
+          skills?.map((skill) => (
+            <Fragment key={skill.id}>
+              <SkillItem skill={skill} handleOpen={handleOpen}></SkillItem>
               <Divider sx={{ mt: 2, mb: 4 }} />
             </Fragment>
           ))
         }
       </Box >
-
     </Box>
   );
 }

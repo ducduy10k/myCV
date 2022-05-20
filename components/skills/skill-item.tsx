@@ -1,4 +1,4 @@
-import { Company } from '@/models';
+import { Company, Skill } from '@/models';
 import PersonIcon from '@mui/icons-material/Person';
 import { Box, Chip, Stack, Typography, List, ListItem, Button, Modal, TextField } from '@mui/material';
 import { margin } from '@mui/system';
@@ -12,7 +12,7 @@ import moment from 'moment';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { StringDecoder } from 'string_decoder';
 export interface ICompanyCardProps {
-  company: Company;
+  skill: Skill;
   handleOpen(id: string): void;
 }
 const style = {
@@ -32,40 +32,28 @@ const style = {
 function getWeeksAfter(date: Date | null, amount: number) {
   return date ? addWeeks(date, amount) : undefined;
 }
-export function CompanyCard({ company, handleOpen }: ICompanyCardProps) {
+export function SkillItem({ skill, handleOpen }: ICompanyCardProps) {
   const [value, setValue] = React.useState<DateRange<Date>>([new Date('01-01-2022'), new Date('01-10-2022')]);
   const [open, setOpen] = React.useState(false);
-  const [nameCompany, setNameCompany] = React.useState(company.companyName);
-  const [desc, setDesc] = React.useState(company.desc);
 
-  console.log(nameCompany)
 
-  const onChangeNameCompany = (e: any) => setNameCompany(e.target.value);
   return (
 
     <Box sx={{
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'space-around'
+      justifyContent: 'space-around',
+
     }}>
       <Box>
         <Stack direction="column" height='100%'>
           <Typography component="h1" variant="h5" mb={1}>
-            {company.companyName}
+            Angular
           </Typography>
-
-          <Box>
-            <Chip color="default" label={moment(company.from).format("DD/MM/YYYY") + ' - ' + moment(company.to).format("DD/MM/YYYY")} />
-          </Box>
-          <Typography component="h6" variant="h6" mb={1}>
-            {company.desc}
-          </Typography>
-
         </Stack>
-
       </Box>
       <Box >
-        <Button onClick={() => handleOpen(company.id)} size="small" variant="outlined">Sửa
+        <Button onClick={() => handleOpen(skill.id)} size="small" variant="outlined">Sửa
         </Button>
       </Box>
       <Modal
@@ -79,43 +67,9 @@ export function CompanyCard({ company, handleOpen }: ICompanyCardProps) {
             required
             id="outlined-required"
             label="Tên công ty"
-            defaultValue="Hello World"
-            value={nameCompany}
-            onChange={onChangeNameCompany}
             sx={{ marginBottom: '16px' }}
           />
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', }} mb={3}>
 
-            <TextField
-              id="date"
-              label="from"
-              type="date"
-              defaultValue="2017-05-24"
-              sx={{ width: 200 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              id="date"
-              label="to"
-              type="date"
-              defaultValue="2017-05-24"
-              sx={{ width: 200 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Box>
-          <TextField
-            required
-            id="outlined-required"
-            label="Mô tả"
-            defaultValue="Hello World"
-            value={desc}
-            onChange={onChangeNameCompany}
-
-          />
         </Box>
       </Modal >
     </Box >
