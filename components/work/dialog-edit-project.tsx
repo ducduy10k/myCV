@@ -116,7 +116,8 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
   }
 
   const handleAdd = () => {
-    onAdd(formData)
+    console.log(formData);
+    // onAdd(formData)
   }
 
   const handleEdit = () => {

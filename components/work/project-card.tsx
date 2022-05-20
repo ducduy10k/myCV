@@ -50,7 +50,7 @@ export function ProjectCard({ project, viewType, onEditProject , onDeleteProject
       </Box>
       <Box flexGrow={1}>
         <Stack direction="column" height='100%'>
-          <Typography component="h1" variant="h5" mb={1}>
+          <Typography component="h1" variant="h5"  fontWeight='bold' mb={1}>
             {project.name}
           </Typography>
           <Box>
@@ -61,10 +61,10 @@ export function ProjectCard({ project, viewType, onEditProject , onDeleteProject
             } />
           </Box>
           <Stack direction='row' alignItems='center' mt={1}>
-            <Typography fontWeight='bold' variant='h6' mr={1}>{project.teamSize}</Typography>
+            <Typography variant='h6' mr={1}>{project.teamSize}</Typography>
             <PersonIcon color='success' />
             </Stack>
-            <Typography  component="h3" variant="h6"mb={1}>Rikkei</Typography>
+            <Typography component="h3" variant="h6"mb={1}>eKGis</Typography>
           
           <Typography marginTop='auto'>{project.technologies}</Typography>
         </Stack>
