@@ -1,9 +1,8 @@
 export interface Company {
-    id: string;
-    companyName: string,
-    position: string,
-    from: Date,
-    to: Date,
-    desc: string,
+  _id: string;
+  companyName: string;
+  position: string;
+  from: string;
+  to: string;
+  description: string;
 }
-

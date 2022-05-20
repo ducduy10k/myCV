@@ -1,6 +1,7 @@
 import { SEO } from '@/components/common';
 import { HeroSection } from '@/components/home';
 import { FeatureWork } from '@/components/home/featured-work';
+import FeaturedSkill from '@/components/home/skills';
 import { MainLayout } from '@/components/layout';
 import { Box } from '@mui/material';
 import type { NextPage } from 'next';
@@ -20,6 +21,7 @@ const Home: NextPageWithLayout = () => {
         thumnailUrl: 'https://yt3.ggpht.com/UnGsNQZn9J8p_mF6waLmrpgShQmN6KZkdzsBjdPAIeyObx91CUxRuQNB1_hhLPzhJOXzgAwK_A=s108-c-k-c0x00ffffff-no-rj'
       }} />
       <HeroSection />
+      <FeaturedSkill></FeaturedSkill>
       <FeatureWork />
     </Box>
   );

@@ -11,7 +11,7 @@ export interface IFeatureWorkProps {
 export function FeatureWork(props: IFeatureWorkProps) {
   const projectList: Project[] = [
     {
-      id: '1',
+      _id: '1',
       name: 'Flooding Map        ',
       from: 'NaN',
       to: 'NaN',
@@ -62,7 +62,7 @@ export function FeatureWork(props: IFeatureWorkProps) {
       url: '',
     },
     {
-      id: '2',
+      _id: '2',
       name: 'RealEstate       ',
       from: 'NaN',
       to: 'NaN',
@@ -115,7 +115,7 @@ export function FeatureWork(props: IFeatureWorkProps) {
       url: '',
     },
     {
-      id: '3',
+      _id: '3',
       name: 'eKMap pipe  ',
       from: '2/2022 ',
       to: '4/2022',

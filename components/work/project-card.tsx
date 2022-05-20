@@ -55,7 +55,7 @@ export function ProjectCard({ project, viewType, onEditProject , onDeleteProject
           </Typography>
           <Box>
             <Chip color="default" label={
-              Moment(new Date(parseFloat(project.from))).format('Do MMM yyyy') +
+              Moment(new Date(parseFloat(project.from))).format('DD/MM/YYYY') +
               ' - ' +
               Moment(new Date(parseFloat(project.to))).format('Do MMM yyyy')
             } />

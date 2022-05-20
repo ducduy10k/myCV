@@ -36,10 +36,7 @@ export function CompanyCard({ company, handleOpen }: ICompanyCardProps) {
   const [value, setValue] = React.useState<DateRange<Date>>([new Date('01-01-2022'), new Date('01-10-2022')]);
   const [open, setOpen] = React.useState(false);
   const [nameCompany, setNameCompany] = React.useState(company.companyName);
-  const [desc, setDesc] = React.useState(company.desc);
-
-  console.log(nameCompany)
-
+  const [desc, setDesc] = React.useState(company.description);
   const onChangeNameCompany = (e: any) => setNameCompany(e.target.value);
   return (
 
@@ -55,17 +52,17 @@ export function CompanyCard({ company, handleOpen }: ICompanyCardProps) {
           </Typography>
 
           <Box>
-            <Chip color="default" label={moment(company.from).format("DD/MM/YYYY") + ' - ' + moment(company.to).format("DD/MM/YYYY")} />
+            <Chip color="default" label={moment(new Date(parseFloat(company.from))).format("DD/MM/YYYY") + ' - ' + moment(new Date(parseFloat(company.to))).format("DD/MM/YYYY") } />
           </Box>
           <Typography component="h6" variant="h6" mb={1}>
-            {company.desc}
+            {company.description}
           </Typography>
 
         </Stack>
 
       </Box>
       <Box >
-        <Button onClick={() => handleOpen(company.id)} size="small" variant="outlined">Sửa
+        <Button onClick={() => handleOpen(company._id)} size="small" variant="outlined">Sửa
         </Button>
       </Box>
       <Modal
