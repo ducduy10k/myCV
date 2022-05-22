@@ -38,20 +38,27 @@ export default function FeaturedSkill(props: ISkillsProps) {
   const skills: any = [
     {
       name: 'angular',
+      percentage: 10,
+    },
+    {
+      name: 'react',
+      percentage: 90,
     },
   ];
 
   return (
     <Box pt={{ xs: 4, md: 18 }} pb={{ xs: 7, md: 9 }}>
       <Container>
-        <div className="skills__data">
-          <div className="skills__names">
-            {skills.map((skill: any) => listSkill[skill.name])}
-            <span className="skills__name">Angular</span>
+        {skills.map((skill: any) => (
+          <div className="skills__data">
+            <div className="skills__names">
+              {listSkill[skill.name]} &nbsp; &nbsp;
+              <span className="skills__name">Angular</span>
+            </div>
+            <div className="skills__percentage">{skill.percentage}</div>
+            <div className="skill__bar" style={{ width: skill.percentage + '%' }}></div>
           </div>
-          <div className="skills__percentage">10</div>
-          <div className="skill__bar"></div>
-        </div>
+        ))}
       </Container>
     </Box>
   );
