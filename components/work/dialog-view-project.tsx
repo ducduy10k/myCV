@@ -50,7 +50,7 @@ export default function DialogViewProject({
           />
         </Box>
       <DialogContent dividers={true}>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ overflow: 'hidden' }}>
           <Table sx={{ minWidth: 650 }} aria-label="caption table">
             <TableBody>
               <TableRow>

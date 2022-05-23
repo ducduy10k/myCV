@@ -2,10 +2,11 @@ import { authApi } from '@/api/index';
 import { useAuth } from '@/hooks';
 import { Box, Button, Checkbox, FormControlLabel, Stack, TextField, Typography } from '@mui/material';
 import login from './../styles/Login.module.css';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Spinner from '@/components/common/spinner';
 import Link from 'next/link';
+import { MainLayout } from '@/components/layout';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -34,20 +35,6 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
-  // const handleGetProfileClick = async () => {
-  //     try {
-  //         await authApi.getProfile();
-  //     } catch (error) {
-  //         console.log(error)
-  //     }
-  //  };
-  const handleLogoutClick = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleChange = (name: string, e: any) => {
     setFormData({
@@ -55,6 +42,10 @@ export default function LoginPage() {
       [name]: e.target.value,
     });
   };
+
+  useEffect(()=>{
+    logout()
+  },[])
 
   return (
     <Fragment>
@@ -97,7 +88,7 @@ export default function LoginPage() {
           </Stack>
           <div>
             Dont have an account ? 
-            <Link href='./'>
+            <Link href='./signup'>
              <Typography color='primary' component='span'> Create your account.</Typography>
             </Link>
           </div>
@@ -125,3 +116,4 @@ export default function LoginPage() {
     </Fragment>
   );
 }
+LoginPage.Layout = MainLayout

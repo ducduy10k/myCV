@@ -25,12 +25,12 @@ export function Footer(props: IFooterProps) {
   }, {
     name: 'ducduy10k@gmail.com',
     icon: Mail,
-    link: 'https://www.youtube.com/',
+    link: 'https://mail.google.com/',
     target: '_blank'
   }, {
     name: 'Hanoi, Vietnam',
     icon: PersonPinCircle,
-    link: 'https://www.youtube.com/',
+    link: 'https://www.google.com/maps',
     target: '_blank'
   },];
 

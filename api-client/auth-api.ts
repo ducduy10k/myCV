@@ -11,4 +11,7 @@ export const authApi = {
   getProfile() {
     return axiosClient.get('/auth');
   },
+  signup(payload: LoginPayload) {
+    return axiosClient.post('/users', payload);
+  },
 };
