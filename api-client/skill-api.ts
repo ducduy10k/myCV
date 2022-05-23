@@ -15,7 +15,7 @@ export const skillApi = {
     return axiosClient.post<Skill>('/skill', payload);
   },
   updateSkill(payload: Skill) {
-    return axiosClient.post(`/skill/${payload.id}`, payload);
+    return axiosClient.post(`/skill/${payload._id}`, payload);
   },
   deleteSkill(id: string) {
     return axiosClient.delete(`/skill/${id}`);

@@ -1,7 +1,7 @@
 import { FeatureWork } from '@/components/home/featured-work';
 import { CompanyList } from '@/components/company';
 import { MainLayout } from '@/components/layout';
-import {  Company } from '@/models';
+import { Company } from '@/models';
 import * as moment from 'moment/moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Button, Container, Stack, Typography, Modal, TextField, Grid } from '@mui/material';
@@ -25,12 +25,13 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export interface ICompanyProps {}
+export interface ICompanyProps { }
 
 export default function CompanyPage(props: ICompanyProps) {
   const isEdit = useRef(false)
   const [_id, setId] = React.useState('');
   const [name, setName] = React.useState('');
+  const [position, setPosition] = React.useState('');
   const [desc, setDesc] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const [start, setStart] = React.useState(Date.now() + '');
@@ -57,6 +58,9 @@ export default function CompanyPage(props: ICompanyProps) {
   const onChangeNameProject = (e: any) => {
     setName(e.target.value);
   };
+  const onChangePosition = (e: any) => {
+    setPosition(e.target.value)
+  }
   const onChangeNameCompany = (e: any) => {
     setDesc(e.target.value);
   };
@@ -82,19 +86,19 @@ export default function CompanyPage(props: ICompanyProps) {
       .addCompany({
         _id: '',
         companyName: name,
-        position: 'Fullstack',
+        position,
         from: start,
         to: end,
         description: desc,
       })
       .then((data: any) => {
         handleClose();
-        const companies : Company[]= [
+        const companies: Company[] = [
           ...companyList,
-          { 
-            _id:data._id,
+          {
+            _id: data._id,
             companyName: name,
-            position: 'Fullstack',
+            position,
             from: start,
             to: end,
             description: desc,
@@ -112,18 +116,18 @@ export default function CompanyPage(props: ICompanyProps) {
       .updateCompany({
         _id: _id,
         companyName: name,
-        position: 'Fullstack',
+        position,
         from: start,
         to: end,
         description: desc,
       })
       .then((data: any) => {
         handleClose();
-        setCompanyList([...companyList].map((company) =>{
+        setCompanyList([...companyList].map((company) => {
           return (company._id === _id) ? {
             _id: _id,
             companyName: name,
-            position: 'Fullstack',
+            position,
             from: start,
             to: end,
             description: desc,
@@ -169,7 +173,7 @@ export default function CompanyPage(props: ICompanyProps) {
                 <Grid item xs={6}>
                   <DesktopDatePicker
                     label="From"
-                    inputFormat="MM/dd/yyyy"
+                    inputFormat="dd/MM/yyyy"
                     value={fromDate}
                     onChange={onChangeStart}
                     renderInput={(params) => <TextField {...params} />}
@@ -178,7 +182,7 @@ export default function CompanyPage(props: ICompanyProps) {
                 <Grid item xs={6}>
                   <DesktopDatePicker
                     label="To"
-                    inputFormat="MM/dd/yyyy"
+                    inputFormat="dd/MM/yyyy"
                     value={toDate}
                     onChange={onChangeEnd}
                     renderInput={(params) => <TextField {...params} />}
@@ -193,26 +197,35 @@ export default function CompanyPage(props: ICompanyProps) {
             label="Mô tả"
             value={desc}
             onChange={onChangeNameCompany}
+            sx={{ marginBottom: '32px', }}
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="Vị trí"
+            value={position}
+            defaultValue={position}
+            onChange={onChangePosition}
           />
           {
-            isEdit ? ( <Button
+            isEdit.current ? (<Button
               onClick={handleEdit}
-              sx={{ marginLeft: '80%', marginTop: '160px' }}
+              sx={{ marginLeft: '80%', marginTop: '70px' }}
               size="small"
               variant="outlined"
             >
               Sửa {' '}
             </Button>
-          ): ( <Button
-            onClick={handleAdd}
-            sx={{ marginLeft: '80%', marginTop: '160px' }}
-            size="small"
-            variant="outlined"
-          >
-            Thêm{' '}
-          </Button>)
+            ) : (<Button
+              onClick={handleAdd}
+              sx={{ marginLeft: '80%', marginTop: '70px' }}
+              size="small"
+              variant="outlined"
+            >
+              Thêm{' '}
+            </Button>)
           }
-         </Box>
+        </Box>
       </Modal>
     </Box>
   );

@@ -47,15 +47,23 @@ export function CompanyCard({ company, handleOpen }: ICompanyCardProps) {
     }}>
       <Box>
         <Stack direction="column" height='100%'>
-          <Typography component="h1" variant="h5" mb={1}>
-            {company.companyName}
-          </Typography>
+          <Box sx={{ display: 'flex' }}>
 
-          <Box>
-            <Chip color="default" label={moment(new Date(parseFloat(company.from))).format("DD/MM/YYYY") + ' - ' + moment(new Date(parseFloat(company.to))).format("DD/MM/YYYY") } />
+            <Typography sx={{ marginRight: '50px' }} component="h1" variant="h5" mb={1}>
+              Công ty: {company.companyName}
+            </Typography>
+            <Typography component="h1" variant="h5" mb={1}>
+              Vị trí: {company.position}
+            </Typography>
           </Box>
           <Typography component="h6" variant="h6" mb={1}>
-            {company.description}
+            Thời gian làm việc
+          </Typography>
+          <Box>
+            <Chip color="default" label={moment(new Date(parseFloat(company.from))).format("DD/MM/YYYY") + ' - ' + moment(new Date(parseFloat(company.to))).format("DD/MM/YYYY")} />
+          </Box>
+          <Typography component="h6" variant="h6" mb={1}>
+            Dự án: {company.description}
           </Typography>
 
         </Stack>
@@ -65,56 +73,6 @@ export function CompanyCard({ company, handleOpen }: ICompanyCardProps) {
         <Button onClick={() => handleOpen(company._id)} size="small" variant="outlined">Sửa
         </Button>
       </Box>
-      <Modal
-        open={open}
-        // onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box component="form" sx={style}>
-          <TextField
-            required
-            id="outlined-required"
-            label="Tên công ty"
-            defaultValue="Hello World"
-            value={nameCompany}
-            onChange={onChangeNameCompany}
-            sx={{ marginBottom: '16px' }}
-          />
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', }} mb={3}>
-
-            <TextField
-              id="date"
-              label="from"
-              type="date"
-              defaultValue="2017-05-24"
-              sx={{ width: 200 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              id="date"
-              label="to"
-              type="date"
-              defaultValue="2017-05-24"
-              sx={{ width: 200 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Box>
-          <TextField
-            required
-            id="outlined-required"
-            label="Mô tả"
-            defaultValue="Hello World"
-            value={desc}
-            onChange={onChangeNameCompany}
-
-          />
-        </Box>
-      </Modal >
     </Box >
   );
 }
