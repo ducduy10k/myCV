@@ -29,13 +29,14 @@ const ReactQuill = dynamic(() => import('react-quill'), {
 export interface IDialogEditProjectProps {
   open: boolean;
   selectedValue: Project | null;
-  onClose: (value: Project | null) => void;
-  onAdd: (value: Project) => void;
-  onEdit: (value: Project) => void;
+  onClose?: (value: Project | null) => void;
+  onAdd?: (value: Project) => void;
+  onEdit?: (value: Project) => void;
+  onError?: (msg: string) => void;
 }
 
 export function DialogEditProject(props: IDialogEditProjectProps) {
-  const { onClose, selectedValue, open, onAdd, onEdit } = props;
+  const { onClose= () => {}, selectedValue, open, onAdd= () => {}, onEdit= () => {}, onError = () => {}} = props;
   const [companies, setCompanies] = useState([]);
   const quillRef = useRef();
 
@@ -66,7 +67,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
     thumbnailUrl: selectedValue ? selectedValue.thumbnailUrl : '',
     expand: false,
     createAt: Date.now() + '',
-    company: selectedValue ? selectedValue.company : '',
+    company: selectedValue ? selectedValue.company : undefined,
     updateAt: selectedValue ? selectedValue.updateAt : '',
     creator: selectedValue ? selectedValue.creator : '',
   });
@@ -135,7 +136,10 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
   };
 
   const handleAdd = () => {
-    console.log(formData);
+    if(!formData.company) {
+      onError('Company is required');
+      return;
+    }
     formData.teamSize = parseInt(formData.teamSize + '');
     projectApi
       .addProject(formData)
@@ -144,17 +148,26 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
         formData._id = data._id;
         return onAdd(formData);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error)
+        const msgError =error.response.data.errors ? error.response.data.errors[0].msg : 'Server error'
+        onError(msgError);
+      });
   };
 
   const handleEdit = () => {
+    if(!formData.company) {
+      onError('Company is required');
+      return;
+    }
     projectApi
       .updateProject(formData)
       .then(() => {
         onEdit(formData);
       })
       .catch((error) => {
-        console.log(error);
+        const msgError =error.response.data.errors ? error.response.data.errors[0].msg : 'Server error'
+        onError(msgError);
       });
   };
 

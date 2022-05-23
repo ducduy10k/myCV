@@ -13,12 +13,13 @@ import React from 'react';
 export interface IDialogDeleteProjectProps {
   open: boolean;
   selectedValue: Project ;
-  onClose: (value: Project | null) => void;
-  onDelete: (value: Project ) => void;
+  onClose?: (value: Project | null) => void;
+  onDelete?: (value: Project ) => void;
+  onError?: (value: string) => void;
 }
 
 export function DialogDeleteProject(props: IDialogDeleteProjectProps) {
-  const { onClose, selectedValue, open, onDelete } = props;
+  const { onClose = () => {} , selectedValue, open, onDelete= () => {}, onError= () => {} } = props;
   const handleClose = () => {
     onClose(null);
   };
@@ -30,6 +31,7 @@ export function DialogDeleteProject(props: IDialogDeleteProjectProps) {
     })
     .catch(error =>{
       console.log(error)
+      onError(error);
     })
   };
   return (

@@ -29,7 +29,7 @@ export default function ProjectPage(props: IProjectPageProps) {
   const [msgAlert, setMsgAlert] = useState<MSGAlert>({
     msg:'', 
     type: 'success',
-    open: true
+    open: false
   })
 
   useEffect(() => {
@@ -66,6 +66,11 @@ export default function ProjectPage(props: IProjectPageProps) {
         return project._id === value._id ? value : project;
       })
     );
+    setMsgAlert({
+      'msg':'Edit project success',
+      'type': 'success',
+      open: true
+    })
     setOpenDialogEdit(false);
   };
 
@@ -76,6 +81,11 @@ export default function ProjectPage(props: IProjectPageProps) {
       })
     );
     setOpenDialogDelete(false);
+    setMsgAlert({
+      'msg':'Delete project success',
+      'type': 'success',
+      open: true
+    })
   };
 
   const handleOpenDialogViewProject = (value: Project) => {
@@ -102,6 +112,16 @@ export default function ProjectPage(props: IProjectPageProps) {
     })
   }
 
+
+  const handleError = (error: any) => {
+    console.log(error);
+    setMsgAlert({
+      msg:error, 
+      type:'error',
+      open: true
+    })
+  };
+
   return (
     <Box component="section" pt={2} pb={4}>
       {openDialogView && selectedValue ? (
@@ -119,14 +139,15 @@ export default function ProjectPage(props: IProjectPageProps) {
           open={openDialogEdit}
           onClose={handleClose}
           onDelete={handleDeleteProject}
+          onError={handleError}
         />
       ) : (
         ''
       )}
 
-      <Snackbar open={msgAlert.open} autoHideDuration={6000} onClose={handleCloseAlert}>
+      <Snackbar open={msgAlert.open} autoHideDuration={6000}  anchorOrigin={{ vertical:'top', horizontal:'right' }} onClose={handleCloseAlert}>
         <Alert severity={msgAlert.type } sx={{ width: '100%' }}  onClose={handleCloseAlert}>
-          This is a success message!
+          {msgAlert.msg}
         </Alert>
       </Snackbar>
 
@@ -148,6 +169,7 @@ export default function ProjectPage(props: IProjectPageProps) {
               onClose={handleClose}
               onAdd={handleAddProject}
               onEdit={handleEditProject}
+          onError={handleError}
             />
           ) : (
             ''
