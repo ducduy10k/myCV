@@ -317,3 +317,23 @@ a {
   border-radius: 0.5rem;
   transition: 1s ease;
 }
+
+
+/*******   CSS scroll    **********/
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+::-webkit-scrollbar:vertical {
+  width: 13px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 13px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 2px solid #ffffff;
+}
