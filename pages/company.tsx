@@ -1,7 +1,7 @@
 import { FeatureWork } from '@/components/home/featured-work';
 import { CompanyList } from '@/components/company';
 import { MainLayout } from '@/components/layout';
-import { Work, Company } from '@/models';
+import {  Company } from '@/models';
 import * as moment from 'moment/moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Button, Container, Stack, Typography, Modal, TextField, Grid } from '@mui/material';

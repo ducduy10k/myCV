@@ -1,6 +1,7 @@
 import { Project } from '@/models';
 import { Delete, Edit, Info } from '@mui/icons-material';
 import PersonIcon from '@mui/icons-material/Person';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import * as React from 'react';
@@ -64,7 +65,7 @@ export function ProjectCard({ project, viewType, onEditProject , onDeleteProject
             <Typography variant='h6' mr={1}>{project.teamSize}</Typography>
             <PersonIcon color='success' />
             </Stack>
-            <Typography component="h3" variant="h6"mb={1}>eKGis</Typography>
+            <Typography component="h3" variant="h6"mb={1}>{project.company} <ApartmentIcon/></Typography>
           
           <Typography marginTop='auto'>{project.technologies}</Typography>
         </Stack>
