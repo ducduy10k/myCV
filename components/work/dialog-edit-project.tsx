@@ -1,4 +1,4 @@
-import { Project } from '@/models';
+import { Company, Project } from '@/models';
 
 import {
   Box,
@@ -8,7 +8,11 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from '@mui/material';
@@ -18,7 +22,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { projectApi } from '@/api-client';
+import { companyApi, projectApi } from '@/api-client';
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
 });
@@ -32,12 +36,18 @@ export interface IDialogEditProjectProps {
 
 export function DialogEditProject(props: IDialogEditProjectProps) {
   const { onClose, selectedValue, open, onAdd, onEdit } = props;
-
+  const [companies, setCompanies] = useState([]);
   const quillRef = useRef();
 
   useEffect(() => {
-    console.log(quillRef.current);
-  }, [quillRef]);
+    companyApi
+      .getAll()
+      .then((data: any) => {
+        console.log(companies);
+        setCompanies(data);
+      })
+      .catch((error) => {});
+  }, []);
 
   const [formData, setFormData] = useState<Project>({
     _id: selectedValue ? selectedValue._id : '',
@@ -56,6 +66,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
     thumbnailUrl: selectedValue ? selectedValue.thumbnailUrl : '',
     expand: false,
     createAt: Date.now() + '',
+    company: selectedValue ? selectedValue.company : '',
     updateAt: selectedValue ? selectedValue.updateAt : '',
     creator: selectedValue ? selectedValue.creator : '',
   });
@@ -75,6 +86,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
     database,
     technologies,
     thumbnailUrl,
+    company,
     expand,
     createAt,
     updateAt,
@@ -87,6 +99,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
   };
 
   const handleChange = (name: string, e: any) => {
+    console.log(e.target.value)
     setFormData({
       ...formData,
       [name]: e.target.value,
@@ -248,6 +261,25 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
         <div>
           <ReactQuill theme="snow" value={responsibilities || ''} onChange={handleChangeResp} />
         </div>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
+          <InputLabel id="demo-simple-select-standard-label">Company</InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={company || ''}
+            onChange={(e) => handleChange('company', e)}
+            label="Company"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {
+              companies.map((company: Company)=>{
+                return  <MenuItem value={company._id} key={company._id}>{company.companyName}</MenuItem>
+              })
+            }
+          </Select>
+        </FormControl>
       </DialogContent>
 
       <DialogActions>
