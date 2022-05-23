@@ -1,17 +1,17 @@
 import { projectApi } from '@/api-client';
 import { MainLayout } from '@/components/layout';
-import { DialogEditProject, ProjectList } from '@/components/work';
-import { DialogDeleteProject } from '@/components/work/dialog-delete-project';
-import DialogViewProject from '@/components/work/dialog-view-project';
+import { DialogEditProject, ProjectList } from '@/components/project';
+import { DialogDeleteProject } from '@/components/project/dialog-delete-project';
+import DialogViewProject from '@/components/project/dialog-view-project';
 import { Project } from '@/models';
 import { Add } from '@mui/icons-material';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-export interface IWorkPageProps {
+export interface IProjectPageProps {
 }
 
-export default function WorkPage(props: IWorkPageProps) {
+export default function ProjectPage(props: IProjectPageProps) {
   const [projectList, setProjectList] = useState<Project[]>([
   ])
 
@@ -116,7 +116,7 @@ export default function WorkPage(props: IWorkPageProps) {
     </Box>
   );
 }
-WorkPage.Layout = MainLayout
-WorkPage.isPrivate = true;
+ProjectPage.Layout = MainLayout
+ProjectPage.isPrivate = true;
 
 // export const getStaticProps: GetStaticProps<I> =

@@ -1,10 +1,10 @@
 import { projectApi } from '@/api-client';
-import { Work, Project } from '@/models';
+import { Project } from '@/models';
 import { Box, Container, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import * as React from 'react';
-import { ProjectList } from '../work';
-import DialogViewProject from '../work/dialog-view-project';
+import { ProjectList } from '../project';
+import DialogViewProject from '../project/dialog-view-project';
 
 export interface IFeatureWorkProps {
 }

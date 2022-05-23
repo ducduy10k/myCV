@@ -19,14 +19,3 @@ export interface Project {
   updateAt?: string;
   creator?: string;
 }
-
-export interface Work {
-  companyName: string;
-  from: string;
-  to: string;
-  projects: Project[];
-  position: 'Frontend' | 'Backend' | 'Fullstack';
-  createAt?: string;
-  updateAt?: string;
-  creator?: string;
-}

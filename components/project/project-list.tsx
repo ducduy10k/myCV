@@ -1,4 +1,4 @@
-import { Project, Work } from '@/models';
+import { Project} from '@/models';
 import { Divider } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { Fragment } from 'react';
