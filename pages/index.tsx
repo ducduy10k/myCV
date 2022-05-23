@@ -13,13 +13,16 @@ import styles from '../styles/Home.module.css';
 
 const Home: NextPageWithLayout = () => {
   return (
-    <Box >
-      <SEO data={{
-        title: 'My CV',
-        decription: "Create new you're profile",
-        url: 'https://learn-nextjs-jade.vercel.app/',
-        thumnailUrl: 'https://yt3.ggpht.com/UnGsNQZn9J8p_mF6waLmrpgShQmN6KZkdzsBjdPAIeyObx91CUxRuQNB1_hhLPzhJOXzgAwK_A=s108-c-k-c0x00ffffff-no-rj'
-      }} />
+    <Box>
+      <SEO
+        data={{
+          title: 'My CV',
+          decription: "Create new you're profile",
+          url: 'https://learn-nextjs-jade.vercel.app/',
+          thumnailUrl:
+            'https://yt3.ggpht.com/UnGsNQZn9J8p_mF6waLmrpgShQmN6KZkdzsBjdPAIeyObx91CUxRuQNB1_hhLPzhJOXzgAwK_A=s108-c-k-c0x00ffffff-no-rj',
+        }}
+      />
       <HeroSection />
       <FeaturedSkill></FeaturedSkill>
       <FeatureWork />
@@ -27,4 +30,6 @@ const Home: NextPageWithLayout = () => {
   );
 };
 Home.Layout = MainLayout;
+Home.isPrivate = true;
+
 export default Home;

@@ -6,35 +6,32 @@ import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { skillApi } from '@/api-client/skill-api';
 
-
-export interface IBlogPageProps {
-}
+export interface IBlogPageProps {}
 
 export default function BlogPage(props: IBlogPageProps) {
-
   const [open, setOpen] = React.useState(false);
-
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpenModal = (id: string) => {
-    console.log(id)
     handleOpen();
-
-  }
-  const [skillList, setSkillList] = React.useState<Skill[]>([])
+  };
+  const [skillList, setSkillList] = React.useState<Skill[]>([]);
   React.useEffect(() => {
     skillApi.getTop10Skill().then((data: any) => {
       setSkillList(data);
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <div>
-      <Button sx={{ marginLeft: '73%', marginBottom: '32px' }} size="small" variant="outlined">thêm skill</Button>
+      <Button sx={{ marginLeft: '73%', marginBottom: '32px' }} size="small" variant="outlined">
+        thêm skill
+      </Button>
       <SkillList skills={skillList} handleOpen={handleOpenModal} />
-    </div >
+    </div>
   );
 }
 
-BlogPage.Layout = MainLayout
+BlogPage.Layout = MainLayout;
+BlogPage.isPrivate = true;

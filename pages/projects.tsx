@@ -11,11 +11,10 @@ import React, { useState, useEffect } from 'react';
 export interface IProjectPageProps {}
 
 export interface MSGAlert {
-  msg:string;
-    type: 'success' | 'info' | 'warning' | 'error';
-    open: boolean
+  msg: string;
+  type: 'success' | 'info' | 'warning' | 'error';
+  open: boolean;
 }
-
 
 export default function ProjectPage(props: IProjectPageProps) {
   const [projectList, setProjectList] = useState<Project[]>([]);
@@ -27,10 +26,10 @@ export default function ProjectPage(props: IProjectPageProps) {
   const [selectedValue, setSelectedValue] = useState<Project | null>(null);
 
   const [msgAlert, setMsgAlert] = useState<MSGAlert>({
-    msg:'', 
+    msg: '',
     type: 'success',
-    open: false
-  })
+    open: false,
+  });
 
   useEffect(() => {
     projectApi.getAll().then((data: any) => {
@@ -54,10 +53,10 @@ export default function ProjectPage(props: IProjectPageProps) {
     setProjectList([...projectList, value]);
     setOpenDialogEdit(false);
     setMsgAlert({
-      'msg':'Add project success',
-      'type': 'success',
-      open: true
-    })
+      msg: 'Add project success',
+      type: 'success',
+      open: true,
+    });
   };
 
   const handleEditProject = (value: Project) => {
@@ -67,10 +66,10 @@ export default function ProjectPage(props: IProjectPageProps) {
       })
     );
     setMsgAlert({
-      'msg':'Edit project success',
-      'type': 'success',
-      open: true
-    })
+      msg: 'Edit project success',
+      type: 'success',
+      open: true,
+    });
     setOpenDialogEdit(false);
   };
 
@@ -82,10 +81,10 @@ export default function ProjectPage(props: IProjectPageProps) {
     );
     setOpenDialogDelete(false);
     setMsgAlert({
-      'msg':'Delete project success',
-      'type': 'success',
-      open: true
-    })
+      msg: 'Delete project success',
+      type: 'success',
+      open: true,
+    });
   };
 
   const handleOpenDialogViewProject = (value: Project) => {
@@ -104,22 +103,20 @@ export default function ProjectPage(props: IProjectPageProps) {
     setOpenDialogDelete(true);
   };
 
-  const handleCloseAlert =()=>{
+  const handleCloseAlert = () => {
     setMsgAlert({
-      msg:'', 
-      type:'success',
-      open: false
-    })
-  }
-
+      msg: '',
+      type: 'success',
+      open: false,
+    });
+  };
 
   const handleError = (error: any) => {
-    console.log(error);
     setMsgAlert({
-      msg:error, 
-      type:'error',
-      open: true
-    })
+      msg: error,
+      type: 'error',
+      open: true,
+    });
   };
 
   return (
@@ -145,8 +142,13 @@ export default function ProjectPage(props: IProjectPageProps) {
         ''
       )}
 
-      <Snackbar open={msgAlert.open} autoHideDuration={6000}  anchorOrigin={{ vertical:'top', horizontal:'right' }} onClose={handleCloseAlert}>
-        <Alert severity={msgAlert.type } sx={{ width: '100%' }}  onClose={handleCloseAlert}>
+      <Snackbar
+        open={msgAlert.open}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        onClose={handleCloseAlert}
+      >
+        <Alert severity={msgAlert.type} sx={{ width: '100%' }} onClose={handleCloseAlert}>
           {msgAlert.msg}
         </Alert>
       </Snackbar>
@@ -169,7 +171,7 @@ export default function ProjectPage(props: IProjectPageProps) {
               onClose={handleClose}
               onAdd={handleAddProject}
               onEdit={handleEditProject}
-          onError={handleError}
+              onError={handleError}
             />
           ) : (
             ''

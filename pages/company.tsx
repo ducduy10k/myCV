@@ -25,10 +25,10 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export interface ICompanyProps { }
+export interface ICompanyProps {}
 
 export default function CompanyPage(props: ICompanyProps) {
-  const isEdit = useRef(false)
+  const isEdit = useRef(false);
   const [_id, setId] = React.useState('');
   const [name, setName] = React.useState('');
   const [position, setPosition] = React.useState('');
@@ -59,8 +59,8 @@ export default function CompanyPage(props: ICompanyProps) {
     setName(e.target.value);
   };
   const onChangePosition = (e: any) => {
-    setPosition(e.target.value)
-  }
+    setPosition(e.target.value);
+  };
   const onChangeNameCompany = (e: any) => {
     setDesc(e.target.value);
   };
@@ -123,16 +123,20 @@ export default function CompanyPage(props: ICompanyProps) {
       })
       .then((data: any) => {
         handleClose();
-        setCompanyList([...companyList].map((company) => {
-          return (company._id === _id) ? {
-            _id: _id,
-            companyName: name,
-            position,
-            from: start,
-            to: end,
-            description: desc,
-          } : company
-        }));
+        setCompanyList(
+          [...companyList].map((company) => {
+            return company._id === _id
+              ? {
+                  _id: _id,
+                  companyName: name,
+                  position,
+                  from: start,
+                  to: end,
+                  description: desc,
+                }
+              : company;
+          })
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -197,7 +201,7 @@ export default function CompanyPage(props: ICompanyProps) {
             label="Mô tả"
             value={desc}
             onChange={onChangeNameCompany}
-            sx={{ marginBottom: '32px', }}
+            sx={{ marginBottom: '32px' }}
           />
           <TextField
             required
@@ -207,24 +211,25 @@ export default function CompanyPage(props: ICompanyProps) {
             defaultValue={position}
             onChange={onChangePosition}
           />
-          {
-            isEdit.current ? (<Button
+          {isEdit.current ? (
+            <Button
               onClick={handleEdit}
               sx={{ marginLeft: '80%', marginTop: '70px' }}
               size="small"
               variant="outlined"
             >
-              Sửa {' '}
+              Sửa{' '}
             </Button>
-            ) : (<Button
+          ) : (
+            <Button
               onClick={handleAdd}
               sx={{ marginLeft: '80%', marginTop: '70px' }}
               size="small"
               variant="outlined"
             >
               Thêm{' '}
-            </Button>)
-          }
+            </Button>
+          )}
         </Box>
       </Modal>
     </Box>
@@ -232,3 +237,4 @@ export default function CompanyPage(props: ICompanyProps) {
 }
 
 CompanyPage.Layout = MainLayout;
+CompanyPage.isPrivate = true;

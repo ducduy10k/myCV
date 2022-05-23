@@ -1,6 +1,14 @@
 import { authApi } from '@/api/index';
 import { useAuth } from '@/hooks';
-import { Box, Button, Checkbox, FormControlLabel, Stack, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import login from './../styles/Login.module.css';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -31,7 +39,6 @@ export default function LoginPage() {
       });
       // redirect to dashboard
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };
@@ -43,9 +50,9 @@ export default function LoginPage() {
     });
   };
 
-  useEffect(()=>{
-    logout()
-  },[])
+  useEffect(() => {
+    logout();
+  }, []);
 
   return (
     <Fragment>
@@ -79,17 +86,22 @@ export default function LoginPage() {
               {' '}
               <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
             </Box>
-            <Box flexGrow={1} textAlign='right'>Forgot your password</Box>
+            <Box flexGrow={1} textAlign="right">
+              Forgot your password
+            </Box>
           </Stack>
-          <Stack  my={2}>
-          <Button  variant="contained"  onClick={handleLoginClick}>
-            Sign in
-          </Button>
+          <Stack my={2}>
+            <Button variant="contained" onClick={handleLoginClick}>
+              Sign in
+            </Button>
           </Stack>
           <div>
-            Dont have an account ? 
-            <Link href='./signup'>
-             <Typography color='primary' component='span'> Create your account.</Typography>
+            Dont have an account ?
+            <Link href="./signup">
+              <Typography color="primary" component="span">
+                {' '}
+                Create your account.
+              </Typography>
             </Link>
           </div>
         </div>
@@ -116,4 +128,4 @@ export default function LoginPage() {
     </Fragment>
   );
 }
-LoginPage.Layout = MainLayout
+LoginPage.Layout = MainLayout;

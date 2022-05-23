@@ -13,7 +13,7 @@ export interface Project {
   database: string;
   technologies: string;
   thumbnailUrl?: string;
-  company?: number;
+  company?: string;
   expand?: boolean;
   createAt?: string;
   updateAt?: string;
