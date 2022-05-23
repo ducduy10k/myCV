@@ -1,38 +1,34 @@
 import { MainLayout } from '@/components/layout';
 import { SkillList } from '@/components/skills';
 import { SkillItem } from '@/components/skills/skill-item';
+import { Skill } from '@/models';
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
+import { skillApi } from '@/api-client/skill-api';
 
 
 export interface IBlogPageProps {
 }
 
 export default function BlogPage(props: IBlogPageProps) {
-  const [skillList, setSkillList] = useState([
-    {
-      id: '1',
-      name: 'Angular',
-      level: '80%',
-      desc: '1 năm kinh nghiệm và 3 dự án thực tế',
-    },
-    {
-      id: '2',
-      name: 'Reactjs',
-      level: '90%',
-      desc: '1 năm kinh nghiệm và 3 dự án thực tế',
 
-
-    }])
   const [open, setOpen] = React.useState(false);
 
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpenModal = (id: string) => {
+    console.log(id)
     handleOpen();
 
   }
+  const [skillList, setSkillList] = React.useState<Skill[]>([])
+  React.useEffect(() => {
+    skillApi.getTop10Skill().then((data: any) => {
+      setSkillList(data);
+    })
+  }, [])
+
   return (
     <div>
       <Button sx={{ marginLeft: '73%', marginBottom: '32px' }} size="small" variant="outlined">thêm skill</Button>

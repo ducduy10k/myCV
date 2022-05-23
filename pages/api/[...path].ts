@@ -19,7 +19,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any>) 
     // Don't send cookei to api server
     req.headers.cookie = '';
     proxy.web(req, res, {
-      target: process.env.API_URL_DEV,
+      target: process.env.API_URL,
       changeOrigin: true,
       selfHandleResponse: false, // có nghĩa là khi proxy nhận đc data nó chả ra luôn cho client lên ta k cần  res để trả về cho người dùng nữa
     });

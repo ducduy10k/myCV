@@ -4,6 +4,8 @@ import { Box, Chip, Stack, Typography, List, ListItem, Button, Modal, TextField 
 import { margin } from '@mui/system';
 import Image from 'next/image';
 import * as React from 'react';
+import * as icons from 'react-icons/si';
+
 import addWeeks from 'date-fns/addWeeks';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -33,45 +35,57 @@ function getWeeksAfter(date: Date | null, amount: number) {
   return date ? addWeeks(date, amount) : undefined;
 }
 export function SkillItem({ skill, handleOpen }: ICompanyCardProps) {
-  const [value, setValue] = React.useState<DateRange<Date>>([new Date('01-01-2022'), new Date('01-10-2022')]);
-  const [open, setOpen] = React.useState(false);
-
+  const listSkill: any = {
+    angular: <icons.SiAngular />,
+    react: <icons.SiReact />,
+    nodejs: <icons.SiNodedotjs />,
+    vue: <icons.SiVuedotjs />,
+    php: <icons.SiPhp />,
+    aws: <icons.SiAmazonaws />,
+    android: <icons.SiAndroid />,
+    apache: <icons.SiApache />,
+    ios: <icons.SiIos />,
+    cplus: <icons.SiCplusplus />,
+    cshap: <icons.SiCsharp />,
+    css: <icons.SiCss3 />,
+    deno: <icons.SiDeno />,
+    git: <icons.SiGit />,
+    html: <icons.SiHtml5 />,
+    java: <icons.SiJava />,
+    javascript: <icons.SiJavascript />,
+    mongobd: <icons.SiMongodb />,
+    nestjs: <icons.SiNestjs />,
+    nextjs: <icons.SiNextdotjs />,
+    python: <icons.SiPython />,
+    sass: <icons.SiSass />,
+    sqlite: <icons.SiSqlite />,
+    sqlserver: <icons.SiMicrosoftsqlserver />,
+    mysql: <icons.SiMysql />,
+    dotnet: <icons.SiDotnet />,
+  };
 
   return (
+    <Box>
+      <div key={skill._id} className="skills__data" >
+        <div className="skills__names">
+          {listSkill[skill.icon]} &nbsp; &nbsp;
+          <span className="skills__name">{skill.name}</span>
+        </div>
+        <div className="skills__percentage">{skill.percentage}</div>
+        <div className="skill__bar" style={{ width: skill.percentage + '%' }}></div>
 
-    <Box sx={{
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
+      </div >
+      <Box sx={{ display: 'flex' }} mb={3}>
 
-    }}>
-      <Box>
-        <Stack direction="column" height='100%'>
-          <Typography component="h1" variant="h5" mb={1}>
-            Angular
-          </Typography>
-        </Stack>
-      </Box>
-      <Box >
-        <Button onClick={() => handleOpen(skill.id)} size="small" variant="outlined">Sửa
-        </Button>
-      </Box>
-      <Modal
-        open={open}
-        // onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box component="form" sx={style}>
-          <TextField
-            required
-            id="outlined-required"
-            label="Tên công ty"
-            sx={{ marginBottom: '16px' }}
-          />
-
+        <Box >
+          <Button sx={{ marginLeft: '24px' }} onClick={() => handleOpen(skill._id)} size="small" variant="outlined">Sửa
+          </Button>
         </Box>
-      </Modal >
+        <Box >
+          <Button sx={{ marginLeft: '24px' }} onClick={() => handleOpen(skill._id)} size="small" variant="outlined">Xóa
+          </Button>
+        </Box>
+      </Box>
     </Box >
   );
 }
