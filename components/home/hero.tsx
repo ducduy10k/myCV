@@ -1,7 +1,9 @@
+import { useAuth } from '@/hooks';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import * as React from 'react';
 export function HeroSection() {
+  const { profile, firstLoading } = useAuth();
   return (
     <Box pt={{ xs: 4, md: 18 }} pb={{ xs: 7, md: 9 }}>
       <Container>
@@ -13,7 +15,7 @@ export function HeroSection() {
         >
           <Box>
             <Typography component="h1" variant="h3" fontWeight="bold" mb={{ xs: 3.5, md: 5 }}>
-              Hi, I am Anya <br /> Web design
+              Hi, I am {(profile as any)?.name} <br /> Web design
             </Typography>
             <Typography mb={{ xs: 3.5, md: 5 }}>
               {' '}

@@ -1,7 +1,7 @@
 import { SEO } from '@/components/common';
 import { HeroSection } from '@/components/home';
 import { FeatureWork } from '@/components/home/featured-work';
-import FeaturedSkill from '@/components/home/skills';
+import FeaturedSkill from '@/components/home/featured-skill';
 import { MainLayout } from '@/components/layout';
 import { Box } from '@mui/material';
 import type { NextPage } from 'next';

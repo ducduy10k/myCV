@@ -1,3 +1,5 @@
+import { skillApi } from '@/api-client/skill-api';
+import { Skill } from '@/models';
 import { Box, Container } from '@mui/material';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
@@ -35,25 +37,22 @@ export default function FeaturedSkill(props: ISkillsProps) {
     dotnet: <icons.SiDotnet />,
   };
 
-  const skills: any = [
-    {
-      name: 'angular',
-      percentage: 10,
-    },
-    {
-      name: 'react',
-      percentage: 90,
-    },
-  ];
+  React.useEffect(()=>{
+    skillApi.getTop10Skill().then((data:any) =>{
+      setSkills(data);
+    })
+  },[])
+
+  const [skills, setSkills] = React.useState<Skill[]>([])
 
   return (
     <Box pt={{ xs: 4, md: 18 }} pb={{ xs: 7, md: 9 }}>
       <Container>
         {skills.map((skill: any) => (
-          <div className="skills__data">
+          <div key={skill._id} className="skills__data" >
             <div className="skills__names">
-              {listSkill[skill.name]} &nbsp; &nbsp;
-              <span className="skills__name">Angular</span>
+              {listSkill[skill.icon]} &nbsp; &nbsp;
+              <span className="skills__name">{skill.name}</span>
             </div>
             <div className="skills__percentage">{skill.percentage}</div>
             <div className="skill__bar" style={{ width: skill.percentage + '%' }}></div>

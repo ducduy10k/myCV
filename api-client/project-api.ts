@@ -5,6 +5,9 @@ export const projectApi = {
   getAll() {
     return axiosClient.get('/project');
   },
+  getTop5Project() {
+    return axiosClient.get('/project/top5');
+  },
   getProjectById(id: number) {
     return axiosClient.get(`/project/${id}`);
   },

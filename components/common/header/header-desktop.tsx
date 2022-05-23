@@ -63,7 +63,6 @@ export function HeaderDesktop(props: IHeaderDesktopProps) {
                 }}
               >
                 <MenuItem onClick={handleCloseMenuProfileClick}>Profile</MenuItem>
-                <MenuItem onClick={handleCloseMenuProfileClick}>My account</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu></>)
           }
