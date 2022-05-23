@@ -37,19 +37,19 @@ export default function FeaturedSkill(props: ISkillsProps) {
     dotnet: <icons.SiDotnet />,
   };
 
-  React.useEffect(()=>{
-    skillApi.getTop10Skill().then((data:any) =>{
+  React.useEffect(() => {
+    skillApi.getTop10Skill().then((data: any) => {
       setSkills(data);
-    })
-  },[])
+    });
+  }, []);
 
-  const [skills, setSkills] = React.useState<Skill[]>([])
+  const [skills, setSkills] = React.useState<Skill[]>([]);
 
   return (
-    <Box pt={{ xs: 4, md: 18 }} pb={{ xs: 7, md: 9 }}>
+    <Box pt={{ xs: 4, md: 4 }} pb={{ xs: 4, md: 4 }}>
       <Container>
         {skills.map((skill: any) => (
-          <div key={skill._id} className="skills__data" >
+          <div key={skill._id} className="skills__data">
             <div className="skills__names">
               {listSkill[skill.icon]} &nbsp; &nbsp;
               <span className="skills__name">{skill.name}</span>
