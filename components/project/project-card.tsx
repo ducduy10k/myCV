@@ -6,6 +6,7 @@ import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import * as React from 'react';
 import Moment from 'moment';
+import { useCompany } from '@/hooks/swrCompany';
 
 export interface IProjectCardProps {
   project: Project;
@@ -16,7 +17,8 @@ export interface IProjectCardProps {
 }
 
 export function ProjectCard({ project, viewType, onEditProject , onDeleteProject, onViewProject}: IProjectCardProps) {
-
+  const { companies, firstLoading } = useCompany();
+  console.log(companies)
   const handleViewProject = () => {
     onViewProject(project);
   }
@@ -29,6 +31,17 @@ export function ProjectCard({ project, viewType, onEditProject , onDeleteProject
     onDeleteProject(project);
   }
 
+  const getCompanyName = () =>{
+    if(companies && companies.length >0){
+     const index = companies.findIndex((company)=>{
+        return company._id == project.company
+      })
+      if(index!= -1){
+        return companies[index].companyName
+      }
+    }
+    return '';
+  }
   return (
     <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
       <Box width={{ xs: '100%', md: '246px' }}>
@@ -65,8 +78,7 @@ export function ProjectCard({ project, viewType, onEditProject , onDeleteProject
             <Typography variant='h6' mr={1}>{project.teamSize}</Typography>
             <PersonIcon color='success' />
             </Stack>
-            <Typography component="h3" variant="h6"mb={1}>{project.company} <ApartmentIcon/></Typography>
-          
+            <Typography component="h3" variant="h6"mb={1}>{getCompanyName()} <ApartmentIcon/></Typography>
           <Typography marginTop='auto'>{project.technologies}</Typography>
         </Stack>
       </Box>
