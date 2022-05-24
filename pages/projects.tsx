@@ -5,7 +5,16 @@ import { DialogDeleteProject } from '@/components/project/dialog-delete-project'
 import DialogViewProject from '@/components/project/dialog-view-project';
 import { Project } from '@/models';
 import { Add } from '@mui/icons-material';
-import { Alert, Box, Button, Container, Snackbar, Stack, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Pagination,
+  Snackbar,
+  Stack,
+  Typography,
+} from '@mui/material';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 export interface IProjectPageProps {}
@@ -15,9 +24,10 @@ export interface MSGAlert {
   type: 'success' | 'info' | 'warning' | 'error';
   open: boolean;
 }
-
+export const PAGE_SIZE = 3;
 export default function ProjectPage(props: IProjectPageProps) {
   const [projectList, setProjectList] = useState<Project[]>([]);
+  const [count, setCount] = useState<number>(0);
 
   const [openDialogView, setOpenDialogView] = useState(false);
   const [openDialogEdit, setOpenDialogEdit] = useState(false);
@@ -30,9 +40,12 @@ export default function ProjectPage(props: IProjectPageProps) {
     type: 'success',
     open: false,
   });
-
+  var numPage = Math.ceil(count / PAGE_SIZE);
   useEffect(() => {
-    projectApi.getAll().then((data: any) => {
+    projectApi.getTotolRecord().then((data: any) => {
+      setCount(data.count);
+    });
+    projectApi.getProjectWithPagination(1, PAGE_SIZE).then((data: any) => {
       setProjectList(data);
     });
   }, []);
@@ -119,6 +132,12 @@ export default function ProjectPage(props: IProjectPageProps) {
     });
   };
 
+  const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    projectApi.getProjectWithPagination(value, PAGE_SIZE).then((data: any) => {
+      setProjectList(data);
+    });
+  };
+
   return (
     <Box component="section" pt={2} pb={4}>
       {openDialogView && selectedValue ? (
@@ -184,6 +203,13 @@ export default function ProjectPage(props: IProjectPageProps) {
           onViewItemProject={handleOpenDialogViewProject}
           viewType="edit"
         />
+        {numPage > 0 ? (
+          <Stack alignItems='center'>
+            <Pagination count={numPage} onChange={handleChangePage} />
+          </Stack>
+        ) : (
+          ''
+        )}
       </Container>
     </Box>
   );

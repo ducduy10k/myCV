@@ -5,6 +5,12 @@ export const projectApi = {
   getAll() {
     return axiosClient.get('/project');
   },
+  getProjectWithPagination(page: number, pageSize: number) {
+    return axiosClient.get(`/project?page=${page}&pageSize=${pageSize}`);
+  },
+  getTotolRecord() {
+    return axiosClient.get(`/project?returnCount=true`);
+  },
   getTop5Project() {
     return axiosClient.get('/project/top5');
   },
