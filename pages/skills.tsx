@@ -3,7 +3,7 @@ import { SkillList } from '@/components/skills';
 import { SkillItem } from '@/components/skills/skill-item';
 import { Skill } from '@/models';
 import React, { useState } from 'react';
-import { Box, Button, Container, Stack, Typography, Modal, TextField, Grid } from '@mui/material';
+import { Box, Button, DialogTitle, DialogActions, DialogContent, Modal, TextField, Dialog, DialogContentText } from '@mui/material';
 import { skillApi } from '@/api-client';
 
 const style = {
@@ -26,19 +26,20 @@ export interface IBlogPageProps {
 
 export default function BlogPage(props: IBlogPageProps) {
   const [open, setOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
   const [_id, setId] = React.useState('');
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleOpenDialog = () => setOpenDialog(true);
+  const handleCloseDialog = () => setOpenDialog(false);
   const [name, setName] = React.useState('');
   const [level, setLevel] = React.useState('');
   const [desc, setDesc] = React.useState('');
   const [percentage, setPercentage] = React.useState('');
-  var isEdit = true;
+  const isEdit = React.useRef(false);
   const [skillList, setSkillList] = React.useState<Skill[]>([])
-  const handleOpenModal = (id: string) => {
-    handleOpen();
-  };
+
 
   React.useEffect(() => {
     skillApi.getTop10Skill().then((data: any) => {
@@ -57,7 +58,27 @@ export default function BlogPage(props: IBlogPageProps) {
   }
   const onChangePercentageSkill = (e: any) => {
     setPercentage(e.target.value || '')
+  }
+  const handleOpenDelateDialog = (id: string) => {
+    handleOpenDialog();
+    setId(id);
+  };
 
+  const handleDeleteDialog = () => {
+
+
+    skillApi
+      .deleteSkill(
+        _id
+      )
+      .then((data: any) => {
+        handleCloseDialog();
+        const skills = skillList.filter((skill: Skill) => skill._id !== _id);
+        setSkillList(skills);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
 
@@ -65,7 +86,7 @@ export default function BlogPage(props: IBlogPageProps) {
     const skill = skillList.find((skill: Skill) => skill._id === id);
     if (skill) {
       handleOpen();
-      isEdit = true;
+      isEdit.current = true;
       setName(skill?.name || '');
       setDesc(skill?.desc || '');
       setLevel(skill?.level || '')
@@ -131,7 +152,7 @@ export default function BlogPage(props: IBlogPageProps) {
       });
   };
   const handleAddSkill = () => {
-    isEdit = false;
+    isEdit.current = false;
     handleOpen();
     setName('');
     setDesc('');
@@ -142,7 +163,7 @@ export default function BlogPage(props: IBlogPageProps) {
   return (
     <div>
       <Button onClick={handleAddSkill} sx={{ marginLeft: '73%', marginBottom: '32px' }} size="small" variant="outlined">thêm skill</Button>
-      <SkillList skills={skillList} handleOpen={handleOpenModalEdit} />
+      <SkillList skills={skillList} handleOpen={handleOpenModalEdit} handleDelete={handleOpenDelateDialog} />
       <Modal
         open={open}
         onClose={handleClose}
@@ -183,7 +204,7 @@ export default function BlogPage(props: IBlogPageProps) {
             sx={{ marginBottom: '32px', }}
           />
           {
-            isEdit ? (<Button
+            isEdit.current ? (<Button
               onClick={handleEdit}
               sx={{ marginLeft: '80%', marginTop: '70px' }}
               size="small"
@@ -202,6 +223,22 @@ export default function BlogPage(props: IBlogPageProps) {
           }
         </Box>
       </Modal>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Bạn có chắc chắn muốn xóa skill này?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Hủy</Button>
+          <Button onClick={handleDeleteDialog} autoFocus>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div >
   );
 }
