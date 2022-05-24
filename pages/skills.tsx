@@ -185,18 +185,11 @@ export default function BlogPage(props: IBlogPageProps) {
             onChange={onChangeDescSkill}
             sx={{ marginBottom: '32px', }}
           />
+
           <TextField
             required
             id="outlined-required"
-            label="Trình độ"
-            value={level}
-            onChange={onChangeLevelSkill}
-            sx={{ marginBottom: '32px', }}
-          />
-          <TextField
-            required
-            id="outlined-required"
-            label="Đánh giá"
+            label="Level"
             value={percentage}
             onChange={onChangePercentageSkill}
             sx={{ marginBottom: '32px', }}

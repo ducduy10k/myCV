@@ -78,6 +78,8 @@ export default function CompanyPage(props: ICompanyProps) {
       isEdit.current = true;
       setName(companies?.companyName || '');
       setDesc(companies?.description || '');
+      setStart(companies?.from);
+      setEnd(companies?.to);
       setId(id);
     }
   };
