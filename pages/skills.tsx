@@ -3,8 +3,6 @@ import { SkillList } from '@/components/skills';
 import { SkillItem } from '@/components/skills/skill-item';
 import { Skill } from '@/models';
 import React, { useState } from 'react';
-
-<<<<<<< HEAD
 import { Box, Button, Container, Stack, Typography, Modal, TextField, Grid } from '@mui/material';
 import { skillApi } from '@/api-client';
 
@@ -24,32 +22,24 @@ const style = {
 };
 export interface IBlogPageProps {
 }
-=======
-export interface IBlogPageProps {}
->>>>>>> 08684b0f3badf20181dfbfed709befa1791e9dd3
+
 
 export default function BlogPage(props: IBlogPageProps) {
   const [open, setOpen] = React.useState(false);
-<<<<<<< HEAD
   const [_id, setId] = React.useState('');
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [name,setName] = React.useState('');
-  const [level,setLevel] = React.useState('');
-  const [desc,setDesc] = React.useState('');
-  const [percentage,setPercentage] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [level, setLevel] = React.useState('');
+  const [desc, setDesc] = React.useState('');
+  const [percentage, setPercentage] = React.useState('');
   var isEdit = true;
   const [skillList, setSkillList] = React.useState<Skill[]>([])
-=======
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const handleOpenModal = (id: string) => {
     handleOpen();
   };
-  const [skillList, setSkillList] = React.useState<Skill[]>([]);
->>>>>>> 08684b0f3badf20181dfbfed709befa1791e9dd3
+
   React.useEffect(() => {
     skillApi.getTop10Skill().then((data: any) => {
       setSkillList(data);
@@ -69,7 +59,7 @@ export default function BlogPage(props: IBlogPageProps) {
     setPercentage(e.target.value || '')
 
   }
-  
+
 
   const handleOpenModalEdit = (id: string) => {
     const skill = skillList.find((skill: Skill) => skill._id === id);
@@ -115,11 +105,11 @@ export default function BlogPage(props: IBlogPageProps) {
     skillApi
       .addSkill({
         _id: '',
-            name,
-            desc,
-            level,
-            percentage,
-            icon: name,
+        name,
+        desc,
+        level,
+        percentage,
+        icon: name,
       })
       .then((data: any) => {
         handleClose();
@@ -151,7 +141,6 @@ export default function BlogPage(props: IBlogPageProps) {
 
   return (
     <div>
-<<<<<<< HEAD
       <Button onClick={handleAddSkill} sx={{ marginLeft: '73%', marginBottom: '32px' }} size="small" variant="outlined">thêm skill</Button>
       <SkillList skills={skillList} handleOpen={handleOpenModalEdit} />
       <Modal
@@ -161,7 +150,7 @@ export default function BlogPage(props: IBlogPageProps) {
         aria-describedby="modal-modal-description"
       >
         <Box component="form" sx={style}>
-        <TextField
+          <TextField
             required
             id="outlined-required"
             label="Kỹ năng"
@@ -169,7 +158,7 @@ export default function BlogPage(props: IBlogPageProps) {
             onChange={onChangeNameSkill}
             sx={{ marginBottom: '32px', }}
           />
-           <TextField
+          <TextField
             required
             id="outlined-required"
             label="Mô tả"
@@ -177,7 +166,7 @@ export default function BlogPage(props: IBlogPageProps) {
             onChange={onChangeDescSkill}
             sx={{ marginBottom: '32px', }}
           />
-           <TextField
+          <TextField
             required
             id="outlined-required"
             label="Trình độ"
@@ -193,7 +182,7 @@ export default function BlogPage(props: IBlogPageProps) {
             onChange={onChangePercentageSkill}
             sx={{ marginBottom: '32px', }}
           />
-        {
+          {
             isEdit ? (<Button
               onClick={handleEdit}
               sx={{ marginLeft: '80%', marginTop: '70px' }}
@@ -214,13 +203,6 @@ export default function BlogPage(props: IBlogPageProps) {
         </Box>
       </Modal>
     </div >
-=======
-      <Button sx={{ marginLeft: '73%', marginBottom: '32px' }} size="small" variant="outlined">
-        thêm skill
-      </Button>
-      <SkillList skills={skillList} handleOpen={handleOpenModal} />
-    </div>
->>>>>>> 08684b0f3badf20181dfbfed709befa1791e9dd3
   );
 }
 
