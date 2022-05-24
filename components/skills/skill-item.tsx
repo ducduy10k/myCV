@@ -16,6 +16,7 @@ import { StringDecoder } from 'string_decoder';
 export interface ICompanyCardProps {
   skill: Skill;
   handleOpen(id: string): void;
+  handleDelete(id: string): void;
 }
 const style = {
   display: 'flex',
@@ -34,7 +35,7 @@ const style = {
 function getWeeksAfter(date: Date | null, amount: number) {
   return date ? addWeeks(date, amount) : undefined;
 }
-export function SkillItem({ skill, handleOpen }: ICompanyCardProps) {
+export function SkillItem({ skill, handleOpen, handleDelete }: ICompanyCardProps) {
   const listSkill: any = {
     angular: <icons.SiAngular />,
     react: <icons.SiReact />,
@@ -63,13 +64,19 @@ export function SkillItem({ skill, handleOpen }: ICompanyCardProps) {
     mysql: <icons.SiMysql />,
     dotnet: <icons.SiDotnet />,
   };
+  const handleDeleteSkill = (id: string) => {
+    handleDelete(id);
+  }
 
   return (
     <Box>
       <div key={skill._id} className="skills__data" >
         <div className="skills__names">
-          {listSkill[skill.icon]} &nbsp; &nbsp;
-          <span className="skills__name">{skill.name}</span>
+          <div>
+            {listSkill[skill.icon]} &nbsp; &nbsp;
+            <span className="skills__name">{skill.name}</span>
+          </div>
+          <div className="skills__name">{skill.desc}</div>
         </div>
         <div className="skills__percentage">{skill.percentage}</div>
         <div className="skill__bar" style={{ width: skill.percentage + '%' }}></div>
@@ -82,7 +89,7 @@ export function SkillItem({ skill, handleOpen }: ICompanyCardProps) {
           </Button>
         </Box>
         <Box >
-          <Button sx={{ marginLeft: '24px' }} onClick={() => handleOpen(skill._id)} size="small" variant="outlined">Xóa
+          <Button sx={{ marginLeft: '24px' }} onClick={() => handleDeleteSkill(skill._id)} size="small" variant="outlined">Xóa
           </Button>
         </Box>
       </Box>
