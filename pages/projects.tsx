@@ -28,6 +28,7 @@ export const PAGE_SIZE = 3;
 export default function ProjectPage(props: IProjectPageProps) {
   const [projectList, setProjectList] = useState<Project[]>([]);
   const [count, setCount] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const [openDialogView, setOpenDialogView] = useState(false);
   const [openDialogEdit, setOpenDialogEdit] = useState(false);
@@ -45,12 +46,18 @@ export default function ProjectPage(props: IProjectPageProps) {
     projectApi.getTotolRecord().then((data: any) => {
       setCount(data.count);
     });
-    projectApi.getProjectWithPagination(1, PAGE_SIZE).then((data: any) => {
+    projectApi.getProjectWithPagination(currentPage, PAGE_SIZE).then((data: any) => {
       setProjectList(data);
     });
   }, []);
 
   const handleOpenAddDialog = () => {
+    setCount((preCount) => {
+      return preCount + 1;
+    });
+    projectApi.getProjectWithPagination(currentPage, PAGE_SIZE).then((data: any) => {
+      setProjectList(data);
+    });
     setSelectedValue(null);
     setOpenDialogEdit(true);
   };
@@ -62,8 +69,12 @@ export default function ProjectPage(props: IProjectPageProps) {
     setSelectedValue(value);
   };
   const handleAddProject = (value: Project) => {
-    // value._id = (projectList.length + 1) + '';
-    setProjectList([...projectList, value]);
+    projectApi.getTotolRecord().then((data: any) => {
+      setCount(data.count);
+    });
+    projectApi.getProjectWithPagination(1, PAGE_SIZE).then((data: any) => {
+      setProjectList(data);
+    });
     setOpenDialogEdit(false);
     setMsgAlert({
       msg: 'Add project success',
@@ -133,13 +144,14 @@ export default function ProjectPage(props: IProjectPageProps) {
   };
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
     projectApi.getProjectWithPagination(value, PAGE_SIZE).then((data: any) => {
       setProjectList(data);
     });
   };
 
   return (
-    <Box component="section" pt={2} pb={4}>
+    <Box component="section" pt={2} pb={4} height='100%'>
       {openDialogView && selectedValue ? (
         <DialogViewProject
           selectedValue={selectedValue}
@@ -204,7 +216,7 @@ export default function ProjectPage(props: IProjectPageProps) {
           viewType="edit"
         />
         {numPage > 0 ? (
-          <Stack alignItems='center'>
+          <Stack alignItems="center">
             <Pagination count={numPage} onChange={handleChangePage} />
           </Stack>
         ) : (
