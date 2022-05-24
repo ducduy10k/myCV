@@ -4,7 +4,7 @@ import { MainLayout } from '@/components/layout';
 import { Company } from '@/models';
 import * as moment from 'moment/moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Button, Container, Stack, Typography, Modal, TextField, Grid } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogTitle, Modal, TextField, Grid } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -25,12 +25,13 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export interface ICompanyProps {}
+export interface ICompanyProps { }
 
 export default function CompanyPage(props: ICompanyProps) {
   const isEdit = useRef(false);
   const [_id, setId] = React.useState('');
   const [name, setName] = React.useState('');
+  const [openDialog, setOpenDialog] = React.useState(false);
   const [position, setPosition] = React.useState('');
   const [desc, setDesc] = React.useState('');
   const [open, setOpen] = React.useState(false);
@@ -127,13 +128,13 @@ export default function CompanyPage(props: ICompanyProps) {
           [...companyList].map((company) => {
             return company._id === _id
               ? {
-                  _id: _id,
-                  companyName: name,
-                  position,
-                  from: start,
-                  to: end,
-                  description: desc,
-                }
+                _id: _id,
+                companyName: name,
+                position,
+                from: start,
+                to: end,
+                description: desc,
+              }
               : company;
           })
         );
@@ -142,7 +143,26 @@ export default function CompanyPage(props: ICompanyProps) {
         console.log(error);
       });
   };
-
+  const handleOpenDialog = () => setOpenDialog(true);
+  const handleCloseDialog = () => setOpenDialog(false);
+  const handleOpenDialogDelete = (id: string) => {
+    handleOpenDialog();
+    setId(id);
+  }
+  const handleDeleteDialog = () => {
+    companyApi
+      .deleteCompany(
+        _id
+      )
+      .then((data: any) => {
+        handleCloseDialog();
+        const companies: Company[] = companyList.filter((company: Company) => company._id !== _id);
+        setCompanyList(companies);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   return (
     <Box component="div" pt={2} pb={4}>
       <Box>
@@ -155,7 +175,7 @@ export default function CompanyPage(props: ICompanyProps) {
           Thêm{' '}
         </Button>
       </Box>
-      <CompanyList companies={companyList} handleOpen={handleOpenModal} />
+      <CompanyList companies={companyList} handleOpen={handleOpenModal} handleDelete={handleOpenDialogDelete} />
       <Modal
         open={open}
         onClose={handleClose}
@@ -232,6 +252,22 @@ export default function CompanyPage(props: ICompanyProps) {
           )}
         </Box>
       </Modal>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Bạn có chắc chắn muốn xóa company này?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Hủy</Button>
+          <Button onClick={handleDeleteDialog} autoFocus>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

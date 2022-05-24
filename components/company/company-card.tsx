@@ -14,6 +14,7 @@ import { StringDecoder } from 'string_decoder';
 export interface ICompanyCardProps {
   company: Company;
   handleOpen(id: string): void;
+  handleDelete(id: string): void;
 }
 const style = {
   display: 'flex',
@@ -32,7 +33,7 @@ const style = {
 function getWeeksAfter(date: Date | null, amount: number) {
   return date ? addWeeks(date, amount) : undefined;
 }
-export function CompanyCard({ company, handleOpen }: ICompanyCardProps) {
+export function CompanyCard({ company, handleOpen, handleDelete }: ICompanyCardProps) {
   const [value, setValue] = React.useState<DateRange<Date>>([new Date('01-01-2022'), new Date('01-10-2022')]);
   const [open, setOpen] = React.useState(false);
   const [nameCompany, setNameCompany] = React.useState(company.companyName);
@@ -71,6 +72,8 @@ export function CompanyCard({ company, handleOpen }: ICompanyCardProps) {
       </Box>
       <Box >
         <Button onClick={() => handleOpen(company._id)} size="small" variant="outlined">Sửa
+        </Button>
+        <Button sx={{ marginLeft: '16px' }} onClick={() => handleDelete(company._id)} size="small" variant="outlined">Xóa
         </Button>
       </Box>
     </Box >

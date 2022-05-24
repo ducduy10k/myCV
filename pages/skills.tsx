@@ -65,8 +65,6 @@ export default function BlogPage(props: IBlogPageProps) {
   };
 
   const handleDeleteDialog = () => {
-
-
     skillApi
       .deleteSkill(
         _id
