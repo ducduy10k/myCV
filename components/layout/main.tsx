@@ -8,7 +8,7 @@ export function MainLayout({ children }: LayoutProps) {
   return (
     <Stack minHeight="100vh">
       <Header />
-      <Box style={{  overflow: 'auto', height: 'calc(100vh - 65px)' }} marginTop={{ xs: '0', md: '65px' }}>
+      <Box style={{  overflow: 'auto', height: 'calc(100vh - 65px)' }} display='flex' marginTop={{ xs: '0', md: '65px' }} flexDirection='column'>
         <Box component="main" flexGrow={1} sx={{}}>
           {children}
         </Box>
