@@ -4,6 +4,7 @@ import { SkillItem } from '@/components/skills/skill-item';
 import { Skill } from '@/models';
 import React, { useState } from 'react';
 
+<<<<<<< HEAD
 import { Box, Button, Container, Stack, Typography, Modal, TextField, Grid } from '@mui/material';
 import { skillApi } from '@/api-client';
 
@@ -23,10 +24,13 @@ const style = {
 };
 export interface IBlogPageProps {
 }
+=======
+export interface IBlogPageProps {}
+>>>>>>> 08684b0f3badf20181dfbfed709befa1791e9dd3
 
 export default function BlogPage(props: IBlogPageProps) {
-
   const [open, setOpen] = React.useState(false);
+<<<<<<< HEAD
   const [_id, setId] = React.useState('');
 
   const handleOpen = () => setOpen(true);
@@ -37,11 +41,20 @@ export default function BlogPage(props: IBlogPageProps) {
   const [percentage,setPercentage] = React.useState('');
   var isEdit = true;
   const [skillList, setSkillList] = React.useState<Skill[]>([])
+=======
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleOpenModal = (id: string) => {
+    handleOpen();
+  };
+  const [skillList, setSkillList] = React.useState<Skill[]>([]);
+>>>>>>> 08684b0f3badf20181dfbfed709befa1791e9dd3
   React.useEffect(() => {
     skillApi.getTop10Skill().then((data: any) => {
       setSkillList(data);
-    })
-  }, [])
+    });
+  }, []);
 
   const onChangeNameSkill = (e: any) => {
     setName(e.target.value || '')
@@ -138,6 +151,7 @@ export default function BlogPage(props: IBlogPageProps) {
 
   return (
     <div>
+<<<<<<< HEAD
       <Button onClick={handleAddSkill} sx={{ marginLeft: '73%', marginBottom: '32px' }} size="small" variant="outlined">thêm skill</Button>
       <SkillList skills={skillList} handleOpen={handleOpenModalEdit} />
       <Modal
@@ -200,7 +214,15 @@ export default function BlogPage(props: IBlogPageProps) {
         </Box>
       </Modal>
     </div >
+=======
+      <Button sx={{ marginLeft: '73%', marginBottom: '32px' }} size="small" variant="outlined">
+        thêm skill
+      </Button>
+      <SkillList skills={skillList} handleOpen={handleOpenModal} />
+    </div>
+>>>>>>> 08684b0f3badf20181dfbfed709befa1791e9dd3
   );
 }
 
-BlogPage.Layout = MainLayout
+BlogPage.Layout = MainLayout;
+BlogPage.isPrivate = true;

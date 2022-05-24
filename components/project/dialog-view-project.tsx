@@ -29,7 +29,6 @@ export default function DialogViewProject({
   selectedValue,
   open,
 }: IDialogViewProjectProps) {
-  console.log(selectedValue);
   const handleClose = () => {
     onClose(selectedValue);
   };

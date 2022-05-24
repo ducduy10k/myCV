@@ -19,9 +19,9 @@ import Link from 'next/link';
 import { MainLayout } from '@/components/layout';
 
 export default function SignUpPage() {
-    const {  logout } = useAuth({
-        revalidateOnMount: false,
-      });
+  const { logout } = useAuth({
+    revalidateOnMount: false,
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     mgs: '',
@@ -60,7 +60,6 @@ export default function SignUpPage() {
           });
         })
         .catch((error) => {
-          console.log(error);
           setError({
             mgs: error.response.data.msg,
             type: 'error',
@@ -68,7 +67,6 @@ export default function SignUpPage() {
         });
       // redirect to dashboard
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };
@@ -80,9 +78,9 @@ export default function SignUpPage() {
     });
   };
 
-  useEffect(()=>{
-    logout()
-  },[])
+  useEffect(() => {
+    logout();
+  }, []);
 
   return (
     <Fragment>
@@ -189,4 +187,4 @@ export default function SignUpPage() {
     </Fragment>
   );
 }
-SignUpPage.Layout = MainLayout
+SignUpPage.Layout = MainLayout;

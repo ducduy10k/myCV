@@ -5,7 +5,7 @@ import * as React from 'react';
 export function HeroSection() {
   const { profile, firstLoading } = useAuth();
   return (
-    <Box pt={{ xs: 4, md: 18 }} pb={{ xs: 7, md: 9 }}>
+    <Box pt={{ xs: 4, md: 6 }} pb={{ xs: 4, md: 6 }}>
       <Container>
         <Stack
           spacing={4}

@@ -23,6 +23,9 @@ import 'react-quill/dist/quill.snow.css';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { companyApi, projectApi } from '@/api-client';
+
+import { useCompany } from '@/hooks/swrCompany';
+
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
 });
@@ -36,19 +39,17 @@ export interface IDialogEditProjectProps {
 }
 
 export function DialogEditProject(props: IDialogEditProjectProps) {
-  const { onClose= () => {}, selectedValue, open, onAdd= () => {}, onEdit= () => {}, onError = () => {}} = props;
-  const [companies, setCompanies] = useState([]);
-  const quillRef = useRef();
+  const {
+    onClose = () => {},
+    selectedValue,
+    open,
+    onAdd = () => {},
+    onEdit = () => {},
+    onError = () => {},
+  } = props;
 
-  useEffect(() => {
-    companyApi
-      .getAll()
-      .then((data: any) => {
-        console.log(companies);
-        setCompanies(data);
-      })
-      .catch((error) => {});
-  }, []);
+  const { companies, firstLoading } = useCompany();
+  const quillRef = useRef();
 
   const [formData, setFormData] = useState<Project>({
     _id: selectedValue ? selectedValue._id : '',
@@ -100,7 +101,6 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
   };
 
   const handleChange = (name: string, e: any) => {
-    console.log(e.target.value)
     setFormData({
       ...formData,
       [name]: e.target.value,
@@ -136,7 +136,7 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
   };
 
   const handleAdd = () => {
-    if(!formData.company) {
+    if (!formData.company) {
       onError('Company is required');
       return;
     }
@@ -144,19 +144,19 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
     projectApi
       .addProject(formData)
       .then((data: any) => {
-        console.log(data);
         formData._id = data._id;
         return onAdd(formData);
       })
       .catch((error) => {
-        console.log(error)
-        const msgError =error.response.data.errors ? error.response.data.errors[0].msg : 'Server error'
+        const msgError = error.response.data.errors
+          ? error.response.data.errors[0].msg
+          : 'Server error';
         onError(msgError);
       });
   };
 
   const handleEdit = () => {
-    if(!formData.company) {
+    if (!formData.company) {
       onError('Company is required');
       return;
     }
@@ -166,7 +166,9 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
         onEdit(formData);
       })
       .catch((error) => {
-        const msgError =error.response.data.errors ? error.response.data.errors[0].msg : 'Server error'
+        const msgError = error.response.data.errors
+          ? error.response.data.errors[0].msg
+          : 'Server error';
         onError(msgError);
       });
   };
@@ -286,11 +288,14 @@ export function DialogEditProject(props: IDialogEditProjectProps) {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            {
-              companies.map((company: Company)=>{
-                return  <MenuItem value={company._id} key={company._id}>{company.companyName}</MenuItem>
-              })
-            }
+            {companies &&
+              companies.map((company: Company) => {
+                return (
+                  <MenuItem value={company._id} key={company._id}>
+                    {company.companyName}
+                  </MenuItem>
+                );
+              })}
           </Select>
         </FormControl>
       </DialogContent>
