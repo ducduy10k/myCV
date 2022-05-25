@@ -123,11 +123,11 @@ export default function BlogPage(props: IBlogPageProps) {
   const handleAdd = () => {
     skillApi
       .addSkill({
-        _id: '',
+        _id: _id,
         name,
         desc,
-        level,
-        percentage,
+        level: percentage,
+        percentage: percentage,
         icon: name,
       })
       .then((data: any) => {
@@ -138,7 +138,7 @@ export default function BlogPage(props: IBlogPageProps) {
             _id: data._id,
             name,
             desc,
-            level,
+            level: percentage,
             percentage,
             icon: name,
           },
