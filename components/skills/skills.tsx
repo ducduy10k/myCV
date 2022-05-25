@@ -12,7 +12,7 @@ export interface ICompanyListProps {
 }
 export function SkillList({ skills, handleOpen, handleDelete }: ICompanyListProps) {
   return (
-    <Box pt={{ xs: 4, md: 18 }} pb={{ xs: 7, md: 9 }}>
+    <Box pt={{ xs: 4, md: 4 }} pb={{ xs: 7, md: 9 }}>
       <Container>
         {skills.map((skill: any) => (
           <SkillItem key={skill._id} skill={skill} handleOpen={handleOpen} handleDelete={handleDelete} />

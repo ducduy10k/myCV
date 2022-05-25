@@ -160,7 +160,7 @@ export default function BlogPage(props: IBlogPageProps) {
 
   return (
     <div>
-      <Button onClick={handleAddSkill} sx={{ marginLeft: '73%', marginBottom: '32px' }} size="small" variant="outlined">thêm skill</Button>
+      <Button onClick={handleAddSkill} sx={{ marginLeft: '73%', marginTop: '32px', }} size="small" variant="outlined">Thêm skill</Button>
       <SkillList skills={skillList} handleOpen={handleOpenModalEdit} handleDelete={handleOpenDelateDialog} />
       <Modal
         open={open}
