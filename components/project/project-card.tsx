@@ -2,7 +2,7 @@ import { Project } from '@/models';
 import { Delete, Edit, Info } from '@mui/icons-material';
 import PersonIcon from '@mui/icons-material/Person';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-import { Box, Button, Chip, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, Stack, Tooltip, Typography } from '@mui/material';
 import Image from 'next/image';
 import * as React from 'react';
 import Moment from 'moment';
@@ -99,23 +99,29 @@ export function ProjectCard({
       </Box>
       <Box>
         <Stack direction="row" justifyContent={'space-around'} height="100%">
-          <Info
-            color="info"
-            onClick={() => handleViewProject()}
-            sx={{ cursor: 'pointer', ml: 1 }}
-          ></Info>
+          <Tooltip title="Info">
+            <Info
+              color="info"
+              onClick={() => handleViewProject()}
+              sx={{ cursor: 'pointer', ml: 1 }}
+            ></Info>
+          </Tooltip>
           {viewType == 'edit' ? (
             <React.Fragment>
-              <Edit
-                onClick={() => handleEditProject()}
-                color="primary"
-                sx={{ cursor: 'pointer', ml: 1 }}
-              ></Edit>
-              <Delete
-                onClick={() => handleDeleteProject()}
-                color="warning"
-                sx={{ cursor: 'pointer', ml: 1 }}
-              ></Delete>
+              <Tooltip title="Edit">
+                <Edit
+                  onClick={() => handleEditProject()}
+                  color="primary"
+                  sx={{ cursor: 'pointer', ml: 1 }}
+                ></Edit>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <Delete
+                  onClick={() => handleDeleteProject()}
+                  color="warning"
+                  sx={{ cursor: 'pointer', ml: 1 }}
+                ></Delete>
+              </Tooltip>
             </React.Fragment>
           ) : (
             ''
