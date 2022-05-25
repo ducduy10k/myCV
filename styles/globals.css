@@ -308,8 +308,7 @@ a {
 
 .skills__names {
   display: flex;
-  align-items: center;
-  flex-direction: row !important;
+  flex-direction: column;
 }
 
 .skills__data>.skills__names>i {
