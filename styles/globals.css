@@ -303,6 +303,7 @@ a {
   position: relative;
   overflow: auto;
   margin-bottom: 2rem;
+  width: 100%;
 }
 
 .skills__names {

@@ -69,7 +69,7 @@ export function SkillItem({ skill, handleOpen, handleDelete }: ICompanyCardProps
   }
 
   return (
-    <Box>
+    <Box sx={{ display: 'flex' }}>
       <div key={skill._id} className="skills__data" >
         <div className="skills__names">
           <div>
@@ -79,7 +79,6 @@ export function SkillItem({ skill, handleOpen, handleDelete }: ICompanyCardProps
           <div className="skills__name">{skill.desc}</div>
         </div>
         <div className="skills__percentage">{skill.percentage}</div>
-        <div className="skill__bar" style={{ width: skill.percentage + '%' }}></div>
 
       </div >
       <Box sx={{ display: 'flex' }} mb={3}>
