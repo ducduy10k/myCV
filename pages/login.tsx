@@ -15,6 +15,11 @@ import { useRouter } from 'next/router';
 import Spinner from '@/components/common/spinner';
 import Link from 'next/link';
 import { MainLayout } from '@/components/layout';
+// import ReCaptcha from '@matt-block/react-recaptcha-v2';
+import dynamic from 'next/dynamic';
+const ReCaptcha = dynamic(import('@matt-block/react-recaptcha-v2'), {
+  ssr: false,
+});
 
 export default function LoginPage() {
   const router = useRouter();
@@ -90,6 +95,14 @@ export default function LoginPage() {
               Forgot your password
             </Box>
           </Stack>
+          <ReCaptcha
+            siteKey="6LcPi1EgAAAAAI141erLcLTPhGJyacYZW3zVaEm_"
+            theme="light"
+            size="normal"
+            onSuccess={(captcha) => console.log(`Successful, result is ${captcha}`)}
+            onExpire={() => console.log('Verification has expired, re-verify.')}
+            onError={() => console.log('Something went wrong, check your conenction')}
+          />
           <Stack my={2}>
             <Button variant="contained" onClick={handleLoginClick}>
               Sign in
